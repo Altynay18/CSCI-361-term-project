@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+table {
+  border: 1px solid black;
+}
+</style>
+</head>
+
+<body>
+
+<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+
+
+<div align="center">
+    <h1>Season List</h1>
+    <a href="/seasonsearch/new">Create New Season</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Season Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Rate</th>
+                <th>Hotels</th>
+ 
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="season : ${listSeasons}">
+                <td th:text="${season.seasonName}">Season Name</td>
+                <td th:text="${season.startDate}">Start Date</td>
+                <td th:text="${season.endDate}">End Date</td>
+                <td th:text="${season.rate}">Rate</td>
+                <th:block th:each="hotel : ${season.hotels}" >
+                <td  th:text="${hotel.hotelName}">Hotel Name</td></th:block>
+                <td>
+                    <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
+                </td> 
+                <td>
+                    <a th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
+                </td>   
+            </tr>
+        </tbody>
+    </table>
+</div>   
+
+
+<!-- <label for="browser">Season:</label>
+<input list="country" id="mySeason" onchange="getSeasonList()">
+<datalist id="season_name">
+</datalist> -->
+<!-- 
+<label for="browser">Hotel:</label>
+<input list="city" id="myCity" onchange="getRoomtypeList()">
+<datalist id="city">
+</datalist> -->
+
+<br>
+<table style="width:70%" id="my-list"></table>
+
+<script>
+
+
+$(document).ready(function () {
+
+});
+</script>
+
+<!-- <table style="width:100%" id="my-list"></table> -->
+
+</body>
+</html>

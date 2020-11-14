@@ -51,6 +51,11 @@ public class MainController {
         model.addAttribute("title", "Profile");
         return "profile";
     }
+    
+    @RequestMapping(path="/seasonsearch")
+    public String seasonseacrh(Model model) {
+        return "seasonsearch";
+    }
 
   @RequestMapping("/bookingform")
   public String bookingformpage() {

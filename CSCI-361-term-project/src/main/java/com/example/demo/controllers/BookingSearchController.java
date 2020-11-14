@@ -60,11 +60,17 @@ public class BookingSearchController {
 	     
 	    return mav;
 	}
+	
+	@RequestMapping("/new")
+	public String showNewProductPage(Model model) {
+	    model.addAttribute("booking", new Booking());
+	    return "bookingform";
+	}
 	@RequestMapping("/save")
 	public RedirectView saveProduct(@ModelAttribute("booking") Booking booking) {
+		if (booking.getBookingId() != null) {
 		Booking book = bookingRepository.findById(booking.getBookingId()).get();
-
-			
+		
 			book.setBookingDate(booking.getBookingDate());
 			book.setBill(booking.getBill());
 			book.setBookingId(booking.getBookingId());
@@ -74,6 +80,19 @@ public class BookingSearchController {
 			book.setRoomNumber(booking.getRoomNumber());
 			book.setRoomType(book.getRoomType());
 			bookingRepository.save(book);
+	
+		} else {
+			Booking book = new Booking();
+			book.setBookingDate(booking.getBookingDate());
+			book.setBill(booking.getBill());
+			book.setBookingId(booking.getBookingId());
+			book.setFromDate(booking.getFromDate());
+			book.setToDate(booking.getToDate());
+			book.setGuest(booking.getGuest());
+			book.setRoomNumber(booking.getRoomNumber());
+			book.setRoomType(book.getRoomType());
+			bookingRepository.save(book);
+		}
 
 //		bookingRepository.save(booking);
 	    return new RedirectView("/bookingsearch");

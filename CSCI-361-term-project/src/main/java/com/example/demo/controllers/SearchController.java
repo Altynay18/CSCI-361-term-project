@@ -9,10 +9,13 @@ import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.data.Booking;
 import com.example.demo.data.BookingRepository;
@@ -112,9 +115,44 @@ public class SearchController {
 //    return "bookingpage";
 //}
 
-@RequestMapping("/hotel")
-public String hotelbookingpage() {
-    return "bookingpage";
+//@RequestMapping("/hotel")
+//public String hotelbookingpage() {
+//    return "bookingform";
+//}
+@RequestMapping("/new")
+public String showNewBookingPage(Model model) {
+    model.addAttribute("book", new Booking());
+    return "bookingform";
+}
+@RequestMapping("/save")
+public RedirectView saveBooking(@ModelAttribute("book") Booking booking) {
+	if (booking.getBookingId() != null) {
+	Booking book = bookingRepository.findById(booking.getBookingId()).get();
+		book.setBookingDate(booking.getBookingDate());
+		book.setBill(booking.getBill());
+		book.setBookingId(booking.getBookingId());
+		book.setFromDate(booking.getFromDate());
+		book.setToDate(booking.getToDate());
+		book.setGuest(booking.getGuest());
+		book.setRoomNumber(booking.getRoomNumber());
+		book.setRoomType(book.getRoomType());
+		bookingRepository.save(book);
+
+	} else {
+		Booking book = new Booking();
+		book.setBookingDate(booking.getBookingDate());
+		book.setBill(booking.getBill());
+		book.setBookingId(booking.getBookingId());
+		book.setFromDate(booking.getFromDate());
+		book.setToDate(booking.getToDate());
+		book.setGuest(booking.getGuest());
+		book.setRoomNumber(booking.getRoomNumber());
+		book.setRoomType(book.getRoomType());
+		bookingRepository.save(book);
+	}
+
+//	bookingRepository.save(booking);
+    return new RedirectView("/bookingsearch");
 }
 
 }

@@ -31,7 +31,7 @@ public interface BookingRepository extends CrudRepository<Booking, Integer>{
 	Iterable<Room> findAvailableRooms(Date from, Date to, Iterable<RoomId> r);
 	
 	@Query("select b from Booking b where (b.booking_id=?1 or ?1=null) and "
-			+ "(b.guest.guest_id=?2 or ?2=null) "
+			+ "(b.guest.guest_id=?2 or ?2=null)"
 			+ "and (b.guest.email=?3 or ?3=null)")
 	Iterable<Booking> findSpecificBooking(Integer bid, Integer gid, String email);
 	

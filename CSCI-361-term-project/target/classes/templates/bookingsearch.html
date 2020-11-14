@@ -96,7 +96,7 @@ function bookingList() {
         	r.forEach(function (e) {
         		$("#my-list").append("<details><summary>Booking Id: "+e.bookingId
         				+"&nbsp;&nbsp;&nbsp;&nbsp; Guest Id: "+e.guest.guestId+"&nbsp;&nbsp;&nbsp;&nbsp;"
-        				+"<a href=\"#\"><button type=\"button\">Change"
+        				+"<a href=\"http://localhost:8080/bookingsearch/edit/"+e.bookingId +"\"><button type=\"button\">Change"
         				+"</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"http://localhost:8080/bookingsearch/delete/" +e.bookingId +"\"><button type=\"button\">Cancel"
         				+"</button></a></summary><p>Booking Date: " + e.bookingDate +"<br> From: "
         				+ e.fromDate + ". To: " + e.toDate + "<br> Room Type: "
@@ -117,6 +117,6 @@ $(document).ready(function () {
 //	bookingList2();
 });
 </script>
-
+ <a class="btn btn-outline-primary"  href="http://localhost:8080/search/new"><button type= "button">Create Booking</button></a>
 </body>
 </html>
