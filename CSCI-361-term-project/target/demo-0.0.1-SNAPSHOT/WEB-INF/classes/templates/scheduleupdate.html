@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+table {
+  border: 1px solid black;
+}
+</style>
+</head>
+
+<body>
+<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+
+<!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Change Schedule</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">Calculate Salary</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Mark day-offs</button>
+</div>
+
+<!-- Tab content -->
+<div id="London" class="tabcontent">
+  <h3 th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name() + ' Schedule'}"></h3>
+  <p th:text="${employee.getEmployee().getEmployee_type()}"></p>
+<form action="@{/search}" th:action="@{/manager/save}" th:object="${employee}"
+            method="post">
+ 	<p>Employee Id: <input type="text" th:field="*{employee.employee_id}" readonly /></p>
+<!--  	<p>Working Hours: <input type="text" th:field="*{from_schedule}"/> - <input type="text" th:field="*{to_schedule}"/></p> -->
+ 	
+            <table border="0" cellpadding="10">
+            		<tr th:each="w : ${employee.getFullWeekdays()}">
+            		<td th:text="${w}"></td>
+            		<td><input type="text" th:field="*{from}" /></td>
+            		<td><input type="text" th:field="*{to}" /></td></tr>
+                               
+                <tr>
+                    <td colspan="2" ><button type="submit">Save</button> </td>
+                </tr>
+            </table>
+        </form>
+</div>
+
+<div id="Paris" class="tabcontent">
+    <h3 th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name() + 'Salary'}"></h3>
+  	<p th:text="${employee.getEmployee().getEmployee_type()}"></p>
+  			<div>
+		<p th:text="${'Worked days (this month): ' + employee.getWorkedDays()}"></p>
+		<p th:text="${'Hours per day: ' + employee.hourPerDay()}"></p>
+		<p th:text="${'Salary per hour: ' + employee.getSalary_per_hour()}"></p>
+		<p th:text="${'Total salary (for this month): ' + employee.totalSalary()}"></p>
+		</div>
+</div>
+
+<div id="Tokyo" class="tabcontent">
+  <h3>DayOffs</h3>
+</div>
+
+<script>
+document.getElementById("defaultOpen").click();
+function openCity(evt, cityName) {
+	  // Declare all variables
+	  var i, tabcontent, tablinks;
+
+	  // Get all elements with class="tabcontent" and hide them
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+	    tabcontent[i].style.display = "none";
+	  }
+
+	  // Get all elements with class="tablinks" and remove the class "active"
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+
+	  // Show the current tab, and add an "active" class to the button that opened the tab
+	  document.getElementById(cityName).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+    <!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #ededed;">
+<div style="background-color: #337ab7; height: 50px;"></div>
+<div class="container-fluid" style="margin-top: 30px;">
+
+    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+        <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-signin" role="form">
+            <h3 class="form-signin-heading">Registration Form</h3>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{name}" placeholder="Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{surname}" placeholder="Last Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{phone_number}" placeholder="Phone Number" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{category}" placeholder="Category" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{id_type}" placeholder="Identyfication Type" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{id_number}" placeholder="Identyfication Number" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{mobile_number}" placeholder="Mobile Number" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{address}" placeholder="Address" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <button type="submit" class="btn btn-primary btn-block">Register User</button>
+                </div>
+            </div>
+            
+            <span th:utext="${successMessage}"></span>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<p>you are here</p>
+</body>
+</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
+                Login Module</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully registered
+                    to our awesome app!</div>
+            </div>
+
+            <h1>Registration</h1>
+
+            <form th:action="@{/registration}" method="post" >
+                <div class="form-group">
+                    <label class="control-label" > First Name </label>
+                    <input  class="form-control"
+                            required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" > Last Name </label> <input
+                        class="form-control"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" > Email </label> <input
+                        class="form-control"  required
+                        autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" > Password </label> <input
+                        class="form-control" type="password"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <span>Already registered? <a href="/" th:href="@{/login}">Login
+								here</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+-->

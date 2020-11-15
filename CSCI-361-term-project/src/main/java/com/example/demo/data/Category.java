@@ -11,7 +11,7 @@ public class Category {
 	@Id
 	private String category;
 	
-	private Double discout;
+	private Double discount;
 	
 	public String getCategory() {
 		return category;
@@ -21,12 +21,12 @@ public class Category {
 		this.category = category;
 	}
 
-	public Double getDiscout() {
-		return discout;
+	public Double getDiscount() {
+		return discount;
 	}
 
-	public void setDiscout(Double discout) {
-		this.discout = discout;
+	public void setDiscount(Double discout) {
+		this.discount = discout;
 	}
 
 }

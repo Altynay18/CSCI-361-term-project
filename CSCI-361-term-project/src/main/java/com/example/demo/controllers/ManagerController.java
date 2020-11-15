@@ -1,6 +1,10 @@
 package com.example.demo.controllers;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,82 +16,100 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.data.Booking;
+import com.example.demo.data.Dayoff;
+import com.example.demo.data.Dayoff.DayoffId;
+import com.example.demo.data.DayoffRepository;
 import com.example.demo.data.Employee;
 import com.example.demo.data.EmployeeRepository;
+import com.example.demo.data.Hotel;
 import com.example.demo.data.HotelRepository;
 import com.example.demo.data.Schedule;
 import com.example.demo.data.ScheduleRepository;
 
 @Controller
-@RequestMapping(path="/manager")
+@RequestMapping(path = "/manager")
 public class ManagerController {
+
+	@Autowired
+	private HotelRepository hotelRepository;
+
+	@Autowired
+	private ScheduleRepository scheduleRepository;
 	
-	  @Autowired
-	  private EmployeeRepository employeeRepository;
-	  
-	  @Autowired
-	  private HotelRepository hotelRepository;
-	  
-	  @Autowired
-	  private ScheduleRepository scheduleRepository;
-	  
-	  @GetMapping("/search")
-	  public String showAll(
-			  @RequestParam(value = "id", required = false) Integer id,
-		        @RequestParam(value = "name", required = false) String name,
-		        @RequestParam(value = "surname", required = false) String surname,
-		        @RequestParam(value = "type", required = false) String type,
-		        @RequestParam(value = "hotel", required = false) String hotel,
-		        Model model) {
-		  model.addAttribute("hotel", hotelRepository.findNamesOnly());
-		  model.addAttribute("type", employeeRepository.findTypesOnly());
-	      model.addAttribute("employees", scheduleRepository.findEmployeeList(id, name, surname, type, hotel));
-	      return "schedule";
-	  }
-	  
-//	  @GetMapping("/update")
-//	  public String showEditForm(Model model) {
-//	      List<Employee> employees = new ArrayList<>();
-//	      employeeRepository.findAll().iterator().forEachRemaining(employees::add);
-//	   
-//	      model.addAttribute("form", new EmployeeDTO(employees));
-//	      return "scheduleupdate";
-//	  }
-	  
-		@RequestMapping("/edit/{id}")
-		public ModelAndView showEditBookingPage(@PathVariable(name = "id") int id) {
-		    ModelAndView mav = new ModelAndView("scheduleupdate");
-		    Optional<Schedule> employee = scheduleRepository.findById(id);
-		    mav.addObject("employee", employee.get());
-		     
-		    return mav;
-		}
-	  
-//	  @PostMapping("/save")
-//	  public String saveBooks(@ModelAttribute EmployeeDTO form, Model model) {
-//		  employeeRepository.saveAll(form.getEmployees());
-//	   
-//	      model.addAttribute("books", employeeRepository.findAll());
-//	      return "redirect:/manager/all";
-//	  }
+	@Autowired
+	private DayoffRepository dayoffRepository;
+	
+	public List<String> list = Arrays.asList("M-Monday", "T-Tuesday", "W-Wednesday", "R-Thursday", "F-Friday", "D-Saturday", "S-Sunday");
+
+	@GetMapping("/test")
+	public @ResponseBody Iterable<Dayoff> showDates() {
+		return dayoffRepository.findByEmployeeId(1);
+	}
+	
+	@GetMapping("/search")
+	public String showAll(@RequestParam(value = "id", required = false) Integer id,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "surname", required = false) String surname,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "hotel", required = false) String hotel, Model model) {
+		model.addAttribute("hotel", hotelRepository.findNamesOnly());
+		model.addAttribute("type", scheduleRepository.findTypesOnly());
+		model.addAttribute("employees", scheduleRepository.findEmployeeList(id, name, surname, type, hotel));
+		return "schedule";
+	}
+	
+	@RequestMapping(value = "/dayoff", method = RequestMethod.POST)
+	@ResponseBody
+	public RedirectView set(@RequestParam("id") Integer id, @RequestParam("day") Date day){
+		System.out.println("check");
+
+	        Dayoff d = new Dayoff();
+	        DayoffId did = new DayoffId();
+	        did.setEmployee_id(id);
+	        did.setDay(day);
+	        d.setDayoff_id(did);
+	        Optional<Employee> e = scheduleRepository.findEmployee(id);
+	        d.setEmployee(e.get());
+	        dayoffRepository.save(d);
+	        return new RedirectView("/manager/edit/" + id);
+	    }
+
+	@RequestMapping("/edit/{id}")
+	public ModelAndView showEditBookingPage(@PathVariable(name = "id") int id) {
+		ModelAndView mav = new ModelAndView("scheduleupdate");
+		Optional<Schedule> employee = scheduleRepository.findById(id);
+		mav.addObject("employee", employee.get());
+		mav.addObject("dayoff", dayoffRepository.findByEmployeeId(id));
+		mav.addObject("monthdayoff", dayoffRepository.findThisMonthDayoffs(id));
+		mav.addObject("weekday", list);
+
+		return mav;
+	}
+
+	@RequestMapping("/save")
+	public RedirectView saveProduct(@ModelAttribute("employee") Schedule employee, RedirectAttributes redirAttrs) {
+		Schedule e = scheduleRepository.findById(employee.getEmployee_id()).get();
+		String s = employee.getWeekdays();
+		System.out.println(employee.getFrom());
+		e.setEmployee_id(employee.getEmployee_id());
+		e.setEmployee(employee.getEmployee());
+		e.setFrom(employee.getFrom());
+		e.setTo(employee.getTo());
+		e.setSalary_per_hour(employee.getSalary_per_hour());
+		e.setSalary_per_month(employee.getSalary_per_month());
+		e.setWeekdays(s.replaceAll(",", ""));
+		scheduleRepository.save(e);
+		redirAttrs.addFlashAttribute("message", "Saved!");
 		
-		@RequestMapping("/save")
-		public RedirectView saveProduct(@ModelAttribute("employee") Schedule employee) {
-			Schedule e = scheduleRepository.findById(employee.getEmployee().getEmployee_id()).get();
-
-				
-				e.setFrom(employee.getFrom());
-				e.setTo(employee.getTo());
-				scheduleRepository.save(e);
-
-//			bookingRepository.save(booking);
-		    return new RedirectView("/manager/search");
-		}
+		return new RedirectView("/manager/edit/" + employee.getEmployee_id());
+	}
 
 }

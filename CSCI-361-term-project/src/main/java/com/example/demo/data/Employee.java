@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name="employee")
@@ -37,6 +39,9 @@ public class Employee {
 	@JoinColumn(name="hotel_id", referencedColumnName="hotel_id")
 	@ManyToOne
     private Hotel hotel;
+	
+	@OneToMany(mappedBy = "employee")
+	private Set<Dayoff> dayoffs;
 
 	public String getPhone() {
 		return phone;

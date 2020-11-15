@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends CrudRepository<Guest, Integer>{
+public interface GuestRepository extends CrudRepository<Guest, Integer>{
 
 }

@@ -19,23 +19,31 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="schedule")
+@Table(name="e_schedule")
 public class Schedule {
 	
-	private Time from;
-	private Time to;
+	@Id
+	@Column(name = "employee_id")
+	private Integer employee_id;
+
+	public Integer getEmployee_id() {
+		return employee_id;
+	}
+	public void setEmployee_id(Integer employee_id) {
+		this.employee_id = employee_id;
+	}
+
+	private Time from_hour;
+	private Time to_hour;
 	private String weekdays;
 	private Integer salary_per_hour;
 	private Integer salary_per_month;
 	
+	@OneToOne
 	@MapsId
 	@JoinColumn(name="employee_id", referencedColumnName="employee_id")
-	@OneToOne
     private Employee employee;
 	
-	@Id
-	@Column(name = "employee_id")
-	private Integer id;
 	
 	public Employee getEmployee() {
 		return employee;
@@ -44,16 +52,16 @@ public class Schedule {
 		this.employee = employee;
 	}
 	public Time getFrom() {
-		return from;
+		return from_hour;
 	}
 	public void setFrom(Time from) {
-		this.from = from;
+		this.from_hour = from;
 	}
 	public Time getTo() {
-		return to;
+		return to_hour;
 	}
 	public void setTo(Time to) {
-		this.to = to;
+		this.to_hour = to;
 	}
 	public String getWeekdays() {
 		return weekdays;
@@ -107,7 +115,12 @@ public class Schedule {
 		    LocalDate last = now.with(TemporalAdjusters.previous(DayOfWeek.valueOf(s.toUpperCase())));
 		    res += (int) ChronoUnit.WEEKS.between(first, last) + 1;
 		}
+		
 		return res;
+	}
+	
+	public LocalDate getCurDate() {
+		return LocalDate.now();
 	}
 	
 	public int hourPerDay() {

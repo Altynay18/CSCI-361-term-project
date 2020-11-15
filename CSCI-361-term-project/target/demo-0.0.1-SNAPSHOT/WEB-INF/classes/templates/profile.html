@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pr‌​o" rel="stylesheet">
+    <title th:text="${title}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">User profile</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+    </nav>
+</div>
+
+<body style="margin-top: 20px; margin-left: 50px; margin-right: 50px;">
+
+<br>
+<h2>Welcome, User</h2>
+
+<p> Name: </p>
+<p> Surname: </p>
+<p> email: </p>
+<p> Phone number: </p>
+<p> Booking history: </p>
+
+
+
+</body>
+</html>

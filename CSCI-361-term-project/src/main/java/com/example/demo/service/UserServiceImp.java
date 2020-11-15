@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.data.Category;
+import com.example.demo.data.CategoryRepository;
 import com.example.demo.data.Guest;
 import com.example.demo.data.Role;
 import com.example.demo.data.RoleRepository;
-import com.example.demo.data.UserRepository;
+import com.example.demo.data.GuestRepository;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -20,7 +22,9 @@ public class UserServiceImp implements UserService {
     @Autowired
     RoleRepository roleRepository;
     @Autowired
-    UserRepository userRepository;
+    GuestRepository userRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public void saveUser(Guest user) {
@@ -28,6 +32,8 @@ public class UserServiceImp implements UserService {
         user.setStatus("VERIFIED");
         Role userRole = roleRepository.findByRoleName("guest");
         user.setRole(userRole);
+        Category userCategory = categoryRepository.findByCategory("basic");
+        user.setCategory(userCategory);
         userRepository.save(user);
     }
 

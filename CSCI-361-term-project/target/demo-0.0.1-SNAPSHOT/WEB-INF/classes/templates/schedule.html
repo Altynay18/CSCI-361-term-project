@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+</style>
+</head>
+
+<body>
+<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+
+<h2>Search Employees</h2>
+<p>Click on the button to open the dropdown menu, and use the input field to search for a specific employee.</p>
+
+<!-- <label for="browser">Employee Id:</label> -->
+<!-- <input list="id" id="myId"> -->
+
+<!-- <label for="browser">Name:</label> -->
+<!-- <input list="name" id="myName"> -->
+
+<!-- <label for="browser">Surname:</label> -->
+<!-- <input list="surname" id="mySurname"> -->
+
+<!-- <label for="browser">Employee Type:</label> -->
+<!-- <input list="type" id="myType"> -->
+<!-- <datalist id="type"> -->
+<!-- </datalist> -->
+
+<!-- <label for="browser">Hotel Name:</label> -->
+<!-- <input list="hotel" id="myHotel"> -->
+<!-- <datalist id="hotel"> -->
+<!-- </datalist> -->
+
+<!-- <input type="submit" value="Search" id="search" onclick="employeeList()"> -->
+<!-- <br> -->
+<!-- <br> -->
+
+<form th:action="@{/manager/search}">
+	<label>Employee Id:</label>
+	<input type="text" th:name="id"/>
+	
+	<label>Name:</label>
+	<input type="text" th:name="name"/>
+	
+	<label>Surname:</label>
+	<input type="text" th:name="surname"/>
+
+    <label>Type:</label>
+    <select th:name="type">
+    <option th:value="${null}" th:text="${null}"></option>
+    <option th:each="i : ${type}" th:value="${i}" th:text="${i}"></option>
+    </select>
+    
+    <label>Hotel Name:</label>
+    <select th:name="hotel">
+    <option th:value="${null}" th:text="${All}"></option>
+    <option th:each="i : ${hotel}" th:value="${i}" th:text="${i}"></option>
+    </select>
+    
+    <input type="submit"/> 
+</form>
+
+<br>
+
+
+<div th:if="${employees.empty}"> No employees. </div>
+<div th:each="book : ${employees}">
+	<details> 
+		<summary th:text="${book.getEmployee().getName() + ' ' + book.getEmployee().getSecond_name()}">  </summary>
+		<p th:text="${'Type: ' + book.getEmployee().getEmployee_type()}"></p>
+		<div th:text="${'Working Hours: '}"></div>
+		<div th:each="w : ${book.getFullWeekdays()}">
+		<div th:text="${w +': ' + book.getFrom() + ' - ' + book.getTo()}"></div>
+		</div>
+		<br>
+		<a th:href="${'/manager/edit/' + book.getEmployee().getEmployee_id()}"><button type="button">Change schedule</button></a>
+		<a href="#"><button type="button">Calculate salary</button></a>
+	</details>
+</div>
+
+
+<script>
+function updateList(items, tag) {
+    $(tag).html("");
+    $(tag).append("<option value=\""+""+"\">"+"All"+"</option>");
+    items.forEach(function (e) {
+        $(tag).append("<option value=\""+e+"\">"+e+"</option>");
+    });
+}
+
+function getHotelList() {
+    $.ajax({
+        url : 'hotelnames',
+        dataType : 'json',
+        success : function(r) {
+            updateList(r, "#hotel");
+        }
+    });
+}
+
+function getTypeList() {
+    $.ajax({
+        url : 'employeetypes',
+        dataType : 'json',
+        success : function(r) {
+            updateList(r, "#type");
+        }
+    });
+}
+
+$(document).ready(function () {
+
+});
+
+</script>
+</body>
+</html>

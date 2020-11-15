@@ -17,44 +17,66 @@ table {
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Change Schedule</button>
   <button class="tablinks" onclick="openCity(event, 'Paris')">Calculate Salary</button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Mark day-offs</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Add day-offs</button>
 </div>
 
 <!-- Tab content -->
 <div id="London" class="tabcontent">
-  <h3 th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name() + ' Schedule'}"></h3>
+  <h3 th:text="${'Schedule'}"></h3>
+  <p th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name()}"></p>
   <p th:text="${employee.getEmployee().getEmployee_type()}"></p>
-<form action="@{/search}" th:action="@{/manager/save}" th:object="${employee}"
+<form action="@{/manager/search}" th:action="@{/manager/save}" th:object="${employee}"
             method="post">
- 	<p>Employee Id: <input type="text" th:field="*{employee.employee_id}" readonly /></p>
-<!--  	<p>Working Hours: <input type="text" th:field="*{from_schedule}"/> - <input type="text" th:field="*{to_schedule}"/></p> -->
- 	
-            <table border="0" cellpadding="10">
-            		<tr th:each="w : ${employee.getFullWeekdays()}">
-            		<td th:text="${w}"></td>
-            		<td><input type="text" th:field="*{from}" /></td>
-            		<td><input type="text" th:field="*{to}" /></td></tr>
-                               
-                <tr>
-                    <td colspan="2" ><button type="submit">Save</button> </td>
-                </tr>
-            </table>
+ 	<p>Employee Id: <input type="text" th:field="*{employee_id}" readonly /></p>
+ 	<p>Working Hours: <input type="text" th:field="*{from}"/> - <input type="text" th:field="*{to}"/></p>
+<!--  	<p>Working Weekdays: <input type="text" th:field="*{weekdays}"/></p> -->
+<!--  	<p>M for Monday, T for Tuesday, W for Wednesday, R for Thursday, F for Friday, D for Saturday, S for Sunday</p> -->
+ 	 <p>
+    <label>Weekdays:
+        <input type="checkbox" name="weekdays"
+            th:each="w : ${weekday}"
+            th:text="${w}"
+            th:value="${#strings.substring(w,0,1)}"
+            th:field="*{weekdays}"
+        />
+    </label>
+	</p>
+ 	<p>Salary per hour: <input type="text" th:field="*{salary_per_hour}"/></p>
+
+ 	<button type="submit">Save</button>
         </form>
+        <p th:text="${message}"></p>
 </div>
 
 <div id="Paris" class="tabcontent">
-    <h3 th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name() + 'Salary'}"></h3>
-  	<p th:text="${employee.getEmployee().getEmployee_type()}"></p>
-  			<div>
-		<p th:text="${'Worked days (this month): ' + employee.getWorkedDays()}"></p>
+    <h3 th:text="${'Salary'}"></h3>
+  <p th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name()}"></p>
+  <p th:text="${employee.getEmployee().getEmployee_type()}"></p>
+  <p th:text="${'Current date: '+employee.getCurDate()}"></p>
+  <br>
+  		<div th:with="result=${employee.totalSalary()-employee.getSalary_per_hour()*employee.hourPerDay()*monthdayoff.size()}">
+		This month salary: 
+		<p th:text="${'Planned working days: ' + employee.getWorkedDays()}"></p>
+		<p th:text="${'Number of days-off: ' + monthdayoff.size()}"></p>
 		<p th:text="${'Hours per day: ' + employee.hourPerDay()}"></p>
 		<p th:text="${'Salary per hour: ' + employee.getSalary_per_hour()}"></p>
-		<p th:text="${'Total salary (for this month): ' + employee.totalSalary()}"></p>
+		<p th:text="${'Total salary: ' + result}"></p>
 		</div>
 </div>
 
 <div id="Tokyo" class="tabcontent">
   <h3>DayOffs</h3>
+  <div th:each="d : ${dayoff}"><p th:text="${d.getDayoff_id().getDay()}"></p></div>
+  
+  <form action="@{/manager/edit}+employee.getEmployee_id()" th:action="@{/manager/dayoff}" method="post">
+	<label>Employee Id:</label>
+	<input type="text" th:name="id" th:value="${employee.getEmployee_id()}" readonly/>
+	
+	<label>Day:</label>
+	<input type="date" th:name="day"/>
+    
+    <input type="submit" value="Add"/>
+</form>
 </div>
 
 <script>

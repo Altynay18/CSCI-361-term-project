@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.*;
 import com.example.demo.data.BookingRepository;
+import com.example.demo.data.Dayoff;
+import com.example.demo.data.DayoffRepository;
 import com.example.demo.data.Hotel;
 import com.example.demo.data.HotelRepository;
 import com.example.demo.data.Room;
@@ -41,6 +43,9 @@ public class SearchController {
   
   @Autowired
   private RoomTypeRepository roomTypeRepository;
+  
+  @Autowired
+	private DayoffRepository dayoffRepository;
 
   @GetMapping(path="/all")
   public @ResponseBody Iterable<Hotel> getAllUsers() {
@@ -99,11 +104,6 @@ public class SearchController {
 		}
 		return room;
 	}
-  
-  @GetMapping(path="/test")
-  public @ResponseBody Iterable<Room> getTest() {
-	  return roomRepository.findAll();
-  }
 
 //@RequestMapping("/hotel/{id: [0-9]+}")
 //public String welcome() {
