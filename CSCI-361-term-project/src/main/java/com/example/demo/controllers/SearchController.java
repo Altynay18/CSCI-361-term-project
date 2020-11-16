@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -119,9 +121,11 @@ public class SearchController {
 //public String hotelbookingpage() {
 //    return "bookingform";
 //}
-@RequestMapping("/new")
-public String showNewBookingPage(Model model) {
+@RequestMapping("/new/{room_type}")
+public String showNewBookingPage(Model model, @PathVariable(name = "id") int room_type) {
     model.addAttribute("book", new Booking());
+    RoomType roomType =roomTypeRepository.findById(room_type).get();
+    model.addAttribute("roomType", roomType);
     return "bookingform";
 }
 @RequestMapping("/save")
