@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -91,6 +92,13 @@ public class Season implements Serializable {
 	  public double getRate() {
 		  return this.rate;
 	  }
+	    @Override
+	    public String toString() {
+	        return "Season{" +
+	                "name=" + this.getSeasonName()+
+	                ", hotels='" + hotels.stream().map(Hotel::getHotelName).collect(Collectors.toList()) + '\'' +
+	                '}';
+	    }
 
 
 	  
