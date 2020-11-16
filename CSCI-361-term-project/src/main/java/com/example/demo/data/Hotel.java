@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.JoinColumn;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -33,7 +36,7 @@ public class Hotel {
 
   @OneToMany(mappedBy="hotel")
   private Set<RoomType> roomTypes;
-  
+  @JsonBackReference
   @ManyToMany(mappedBy = "hotels", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 
   private Set<Season> seasons;
