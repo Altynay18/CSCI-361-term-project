@@ -1,17 +1,29 @@
 package com.example.demo.data;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name="hotel")
 public class Hotel {
   @Id
-  private int hotel_id;
+//  private int hotel_id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="hotel_id")
+	private int hotel_id;
 
   private String country_name;
 
@@ -22,8 +34,18 @@ public class Hotel {
   @OneToMany(mappedBy="hotel")
   private Set<RoomType> roomTypes;
   
-  @OneToMany(mappedBy="hotel")
-  private Set<Employee> employees;
+  @ManyToMany(mappedBy = "hotels", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+  private Set<Season> seasons;
+//  public void addSeasons(Season season) {
+//      seasons.add(season);
+//      season.getHotels().add(this);
+//  }
+//  
+  public Set<Season> getSeasons() {
+      return seasons;
+  }
+//  
   
   public int getId() {
     return hotel_id;
@@ -40,6 +62,11 @@ public class Hotel {
   public void setCountry(String name) {
     this.country_name = name;
   }
+  
+  public String getHotelName() {
+	    return name;
+	  }
+  
 
   public String getCity() {
     return city;
@@ -48,13 +75,5 @@ public class Hotel {
   public void setCity(String email) {
     this.city = email;
   }
-
-public String getName() {
-	return name;
-}
-
-public void setName(String name) {
-	this.name = name;
-}
 }
 
