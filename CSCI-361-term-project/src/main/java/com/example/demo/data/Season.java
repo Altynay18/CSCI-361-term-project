@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @SuppressWarnings("serial")
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name="season")
@@ -29,6 +31,7 @@ public class Season implements Serializable {
 	  @Column(name = "rate")
 	  private double rate;
 	  
+	  @JsonManagedReference 
 	  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	  @JoinTable(
 	          name = "hotel_has_season",
