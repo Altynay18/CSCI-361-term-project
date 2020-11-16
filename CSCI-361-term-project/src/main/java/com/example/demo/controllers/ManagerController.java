@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,18 +69,23 @@ public class ManagerController {
 	
 	@RequestMapping(value = "/dayoff", method = RequestMethod.POST)
 	@ResponseBody
-	public RedirectView set(@RequestParam("id") Integer id, @RequestParam("day") Date day){
-		System.out.println("check");
-
+	public RedirectView set(@RequestParam("id") Integer id, @RequestParam("day") String day, RedirectAttributes redirAttrs){
+		System.out.println(day);
+		if(day.isEmpty()) {
+			redirAttrs.addFlashAttribute("message2", "Please, fill the date"); 
+		} else {
+		Date date=Date.valueOf(day);
 	        Dayoff d = new Dayoff();
 	        DayoffId did = new DayoffId();
 	        did.setEmployee_id(id);
-	        did.setDay(day);
+	        did.setDay(date);
 	        d.setDayoff_id(did);
 	        Optional<Employee> e = scheduleRepository.findEmployee(id);
 	        d.setEmployee(e.get());
 	        dayoffRepository.save(d);
-	        return new RedirectView("/manager/edit/" + id);
+	        redirAttrs.addFlashAttribute("message2", "Saved!"); 
+		}
+		return new RedirectView("/manager/edit/" + id);
 	    }
 
 	@RequestMapping("/edit/{id}")

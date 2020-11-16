@@ -45,7 +45,7 @@ public class SearchController {
   private RoomTypeRepository roomTypeRepository;
   
   @Autowired
-	private DayoffRepository dayoffRepository;
+  private DayoffRepository dayoffRepository;
 
   @GetMapping(path="/all")
   public @ResponseBody Iterable<Hotel> getAllUsers() {

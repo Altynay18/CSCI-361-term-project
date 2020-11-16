@@ -3,6 +3,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 table {
   border: 1px solid black;
@@ -13,94 +16,91 @@ table {
 <body>
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
 
-<!-- Tab links -->
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Change Schedule</button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">Calculate Salary</button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Add day-offs</button>
-</div>
+	<div class="container">
+		<h2  th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name()}"></h2>
+				<h3 th:text="${employee.getEmployee().getEmployee_type()}"></h3>
+		<ul class="nav nav-tabs" id="myTab">
+			<li class="nav-item"><a href="#home" class="nav-link active" data-toggle="tab">Change schedule</a></li>
+			<li class="nav-item"><a href="#menu1" class="nav-link active" data-toggle="tab">Calculate Salary</a></li>
+			<li class="nav-item"><a href="#menu2" class="nav-link active" data-toggle="tab">Add day-offs</a></li>
+		</ul>
 
-<!-- Tab content -->
-<div id="London" class="tabcontent">
-  <h3 th:text="${'Schedule'}"></h3>
-  <p th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name()}"></p>
-  <p th:text="${employee.getEmployee().getEmployee_type()}"></p>
-<form action="@{/manager/search}" th:action="@{/manager/save}" th:object="${employee}"
-            method="post">
- 	<p>Employee Id: <input type="text" th:field="*{employee_id}" readonly /></p>
- 	<p>Working Hours: <input type="text" th:field="*{from}"/> - <input type="text" th:field="*{to}"/></p>
-<!--  	<p>Working Weekdays: <input type="text" th:field="*{weekdays}"/></p> -->
-<!--  	<p>M for Monday, T for Tuesday, W for Wednesday, R for Thursday, F for Friday, D for Saturday, S for Sunday</p> -->
- 	 <p>
-    <label>Weekdays:
-        <input type="checkbox" name="weekdays"
-            th:each="w : ${weekday}"
-            th:text="${w}"
-            th:value="${#strings.substring(w,0,1)}"
-            th:field="*{weekdays}"
-        />
-    </label>
-	</p>
- 	<p>Salary per hour: <input type="text" th:field="*{salary_per_hour}"/></p>
+		<div class="tab-content">
+			<div id="home" class="tab-pane fade in active">
+				<h3 th:text="${'Schedule'}"></h3>
+				<form action="@{/manager/search}" th:action="@{/manager/save}"
+					th:object="${employee}" method="post">
+					<p>
+						Employee Id: <input type="text" th:field="*{employee_id}" readonly />
+					</p>
+					<p>
+						Working Hours: <input type="text" th:field="*{from}" /> - <input
+							type="text" th:field="*{to}" />
+					</p>
+					<!--  	<p>Working Weekdays: <input type="text" th:field="*{weekdays}"/></p> -->
+					<!--  	<p>M for Monday, T for Tuesday, W for Wednesday, R for Thursday, F for Friday, D for Saturday, S for Sunday</p> -->
+					<p>
+						<label>Weekdays: <input type="checkbox" name="weekdays"
+							th:each="w : ${weekday}" th:text="${w}"
+							th:value="${#strings.substring(w,0,1)}" th:field="*{weekdays}" />
+						</label>
+					</p>
+					<p>
+						Salary per hour: <input type="text" th:field="*{salary_per_hour}" />
+					</p>
 
- 	<button type="submit">Save</button>
-        </form>
-        <p th:text="${message}"></p>
-</div>
+					<button type="submit">Save</button>
+				</form>
+				<p th:text="${message}"></p>
+			<div th:text="${'Working Hours: '}"></div>
+			<div th:each="w : ${employee.getFullWeekdays()}">
+				<div th:text="${w +': ' + employee.getFrom() + ' - ' + employee.getTo()}"></div>
+			</div>
+			</div>
+			<div id="menu1" class="tab-pane fade">
+				<h3 th:text="${'Salary'}"></h3>
+				<p th:text="${'Current date: '+employee.getCurDate()}"></p>
+				<br>
+				<div
+					th:with="result=${employee.totalSalary()-employee.getSalary_per_hour()*employee.hourPerDay()*monthdayoff.size()}">
+					<p>This month salary:</p>
+					<p th:text="${'Planned working days: ' + employee.getWorkedDays()}"></p>
+					<p th:text="${'Number of days-off: ' + monthdayoff.size()}"></p>
+					<p th:text="${'Hours per day: ' + employee.hourPerDay()}"></p>
+					<p th:text="${'Salary per hour: ' + employee.getSalary_per_hour()}"></p>
+					<p th:text="${'Total salary: ' + result}"></p>
+				</div>
+			</div>
+			<div id="menu2" class="tab-pane fade">
+				<h3>DayOffs</h3>
+				<div th:each="d : ${dayoff}">
+					<p th:text="${d.getDayoff_id().getDay()}"></p>
+				</div>
 
-<div id="Paris" class="tabcontent">
-    <h3 th:text="${'Salary'}"></h3>
-  <p th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name()}"></p>
-  <p th:text="${employee.getEmployee().getEmployee_type()}"></p>
-  <p th:text="${'Current date: '+employee.getCurDate()}"></p>
-  <br>
-  		<div th:with="result=${employee.totalSalary()-employee.getSalary_per_hour()*employee.hourPerDay()*monthdayoff.size()}">
-		This month salary: 
-		<p th:text="${'Planned working days: ' + employee.getWorkedDays()}"></p>
-		<p th:text="${'Number of days-off: ' + monthdayoff.size()}"></p>
-		<p th:text="${'Hours per day: ' + employee.hourPerDay()}"></p>
-		<p th:text="${'Salary per hour: ' + employee.getSalary_per_hour()}"></p>
-		<p th:text="${'Total salary: ' + result}"></p>
+				<form action="@{/manager/edit}+employee.getEmployee_id()"
+					th:action="@{/manager/dayoff}" method="post">
+					<label>Employee Id:</label> <input type="text" th:name="id"
+						th:value="${employee.getEmployee_id()}" readonly /> <label>Day:</label>
+					<input type="date" th:name="day" /> <input type="submit"
+						value="Add" />
+				</form>
+				<p th:text="${message2}"></p>
+			</div>
+
 		</div>
-</div>
+	</div>
 
-<div id="Tokyo" class="tabcontent">
-  <h3>DayOffs</h3>
-  <div th:each="d : ${dayoff}"><p th:text="${d.getDayoff_id().getDay()}"></p></div>
-  
-  <form action="@{/manager/edit}+employee.getEmployee_id()" th:action="@{/manager/dayoff}" method="post">
-	<label>Employee Id:</label>
-	<input type="text" th:name="id" th:value="${employee.getEmployee_id()}" readonly/>
+	<script>
+	$(document).ready(function(){
+	    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+	        localStorage.setItem('activeTab', $(e.target).attr('href'));
+	    });
+	    var activeTab = localStorage.getItem('activeTab');
+	    if(activeTab){
+	        $('#myTab a[href="' + activeTab + '"]').tab('show');
+	    }
+		});
 	
-	<label>Day:</label>
-	<input type="date" th:name="day"/>
-    
-    <input type="submit" value="Add"/>
-</form>
-</div>
-
-<script>
-document.getElementById("defaultOpen").click();
-function openCity(evt, cityName) {
-	  // Declare all variables
-	  var i, tabcontent, tablinks;
-
-	  // Get all elements with class="tabcontent" and hide them
-	  tabcontent = document.getElementsByClassName("tabcontent");
-	  for (i = 0; i < tabcontent.length; i++) {
-	    tabcontent[i].style.display = "none";
-	  }
-
-	  // Get all elements with class="tablinks" and remove the class "active"
-	  tablinks = document.getElementsByClassName("tablinks");
-	  for (i = 0; i < tablinks.length; i++) {
-	    tablinks[i].className = tablinks[i].className.replace(" active", "");
-	  }
-
-	  // Show the current tab, and add an "active" class to the button that opened the tab
-	  document.getElementById(cityName).style.display = "block";
-	  evt.currentTarget.className += " active";
-	}
 </script>
 </body>
 </html>

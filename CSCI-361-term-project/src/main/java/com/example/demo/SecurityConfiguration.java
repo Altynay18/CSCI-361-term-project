@@ -20,7 +20,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @Autowired
     private DataSource dataSource;
 
@@ -51,8 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/bookingsearch").permitAll()
-                .antMatchers("/search").permitAll()
+                .antMatchers("/bookingsearch/**").permitAll()
+                .antMatchers("/search/**").permitAll()
 
 
                 .antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")

@@ -68,9 +68,9 @@ function bookingList() {
         				+"<a href=\"/bookingsearch/edit/"+e.bookingId +"\"><button type=\"button\">Change"
         				+"</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"/bookingsearch/delete/" +e.bookingId +"\"><button type=\"button\">Cancel"
         				+"</button></a></summary><p>Booking Date: " + e.bookingDate +"<br> From: "
-        				+ e.check_in + ". To: " + e.check_out + "<br> Room Type: "
+        				+ e.fromDate + ". To: " + e.toDate + "<br> Room Type: "
         				+ e.room.room_id.room_type_id.room_type_name + ". Room Number: "
-        				+ e.room.room_id.roomNumber + "<br> Bill: "+e.bill + "<br> Guest name: "+ e.guest.name
+        				+ e.room.room_id.room_number + "<br> Bill: "+e.bill + "<br> Guest name: "+ e.guest.name
         				+ " " + e.guest.surname + "<br> Guest e-mail: " + e.guest.email
         				+"</p></details>"); 
         	

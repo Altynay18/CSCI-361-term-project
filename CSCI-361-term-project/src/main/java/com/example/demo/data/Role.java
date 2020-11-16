@@ -27,13 +27,13 @@ public class Role {
     /*@Column(name = "role_desc")
     private String desc;*/
 
-    public Set<Guest> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<Guest> users) {
-		this.users = users;
-	}
+//    public Set<Guest> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(Set<Guest> users) {
+//		this.users = users;
+//	}
 
 	public int getId() {
         return roleId;
