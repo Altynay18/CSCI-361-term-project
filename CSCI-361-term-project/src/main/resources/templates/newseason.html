@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+table {
+  border: 1px solid black;
+}
+</style>
+</head>
+
+<body>
+
+<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+
+  <div align="center">
+        <h1>Create New Season</h1>
+        <br />
+     
+     <select class="form-control" name="example" id="example" multiple="multiple">
+     <option value="0">ALL</option>
+     <option th:each="hotel : ${listHotels}"
+             th:value="${hotel.id}"
+             th:field="*{listHotels}"
+             th:text="${hotel.hotelName}">
+     </option>
+</select>
+        <form action="#" th:action="@{/seasonsearch/save}" th:object="${season}"
+            method="post">
+            
+            
+        
+            <table border="0" cellpadding="10">
+             <tr th:object="${object2}" >
+             
+             </tr>
+        
+                <tr>
+                    <td>Season Name:</td>
+                    <td><input type="text" th:field="*{seasonName}" /></td>
+                </tr>
+                <tr>
+                    <td>Start Date:</td>
+                    <td><input type="date" th:field="*{startDate}" /></td>
+                </tr>
+                <tr>
+                    <td>End Date:</td>
+                    <td><input type="date" th:field="*{endDate}" /></td>
+                </tr>
+                <tr>
+                    <td>Rate:</td>
+                    <td><input type="text" th:field="*{rate}" /></td>
+                    
+                </tr> 
+
+          <tr>
+                    <td colspan="2"><button type="submit">Save</button> </td>
+             </tr>
+            </table>
+        </form>
+    </div>
+
+<!-- <label for="browser">Season:</label>
+<input list="country" id="mySeason" onchange="getSeasonList()">
+<datalist id="season_name">
+</datalist> -->
+<!-- 
+<label for="browser">Hotel:</label>
+<input list="city" id="myCity" onchange="getRoomtypeList()">
+<datalist id="city">
+</datalist> -->
+
+<br>
+<table style="width:70%" id="my-list"></table>
+
+<script>
+
+
+$(document).ready(function () {
+
+});
+</script>
+
+<!-- <table style="width:100%" id="my-list"></table> -->
+
+</body>
+</html>
