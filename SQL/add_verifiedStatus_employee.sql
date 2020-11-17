@@ -1,0 +1,12 @@
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '1');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '2');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '3');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '4');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '5');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '6');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '7');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '8');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '9');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '10');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '11');
+UPDATE `hotel`.`employee` SET `status` = 'VERIFIED' WHERE (`employee_id` = '12');
