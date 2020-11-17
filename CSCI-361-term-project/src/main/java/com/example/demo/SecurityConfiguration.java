@@ -206,7 +206,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/search/**").permitAll()*/
 
 
-              /*  .antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")*/
+              /*  .antMatchers("//**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")*/
               /*  .anyRequest().authenticated()
                 .and()
                 .csrf().disable().formLogin()
