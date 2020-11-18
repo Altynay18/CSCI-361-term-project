@@ -1,0 +1,123 @@
+<!--<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Hotel chain</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Register</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="#">Sign up</a>
+</div>
+<body>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>"Hedgehogs"hotel chain</h1>
+        <p class="lead text-muted">Our All-inclusive resorts and hotels offer you an exclusive travel experience: for a romantic escape or a family holiday, book your next stay with us!</p>
+        <p>
+            <a th:href="@{search}" class="btn btn-primary my-2">Search a room</a>
+        </p>
+    </div>
+</section>
+<div class="container">
+  <div class="row">
+        <div class="col-md-2">
+            <h2>Zhuldyz</h2>
+            <p>Contact Phone:+777707770707 </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-2">
+            <h2>Kamilla</h2>
+            <p>Contact Phone:+77770770777 </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-2">
+            <h2>Gulnaz</h2>
+            <p>Contact Phone:+77770777707</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-2">
+            <h2>Altynai</h2>
+            <p>Contact Phone:+77770777707</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-2">
+            <h2>Amina</h2>
+            <p>Contact Phone:+77770777707</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+    </div>
+
+    <hr>
+
+</div>
+</body>
+</html>
+-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Hotel chain</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+
+    </nav>
+    <a class="btn btn-outline-primary" th:href="@{profile}">My profile</a>
+
+</div>
+<body>
+<section class="jumbotron text-center">
+    <div class="container">
+
+        <h1 style="color:dodgerblue">"Hedgehogs"hotel chain</h1>
+        <br>
+        <br>
+        <p class="lead ">Our All-inclusive resorts and hotels offer you an exclusive travel experience: for a romantic escape or a family holiday, book your next stay with us!</p>
+        <br>
+        <br>
+        <p>
+            <a th:href="@{search}" class="btn btn-primary my-2">Search a room</a>
+        </p>
+    </div>
+</section>
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container mt-5">
+    <h1>Hotels</h1>
+    <div th:each="el :${hotels}"class="col-md-8">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <h3 th:text="${el.getCountry()}"/>
+                <p th:text="${el.getCity()}"/>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#"></a>
+        </p>
+        <p>Contact information: +77770770707 </p>
+        <p>E-mail: information@hedgehogs.kz </p>
+        <p>Follow us on Instagram: @hedgehogs_hotelchain</p>
+    </div>
+</footer>
+<hr>
+
+</body>
+</html>
