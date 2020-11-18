@@ -20,6 +20,12 @@ public class MainController {
         model.addAttribute("hotels", hotels);
         return "home";
     }
+	
+	  @RequestMapping("/mainpage")
+    public String showmainpage(Model model) {
+        model.addAttribute("title", "Main page");
+        return "mainpage";
+    }
 
 	@RequestMapping(path = "/search")
 	public String search(Model model) {
