@@ -27,7 +27,7 @@ public class Booking {
 	private Integer booking_id;
 	
 	@Column(name = "booking_date")
-	private Timestamp booking_date;
+	private Date booking_date;
 
 	private Date check_in;
 	
@@ -110,12 +110,12 @@ public class Booking {
 		this.bill = bill;
 	}
 
-	public Timestamp getBookingDate() {
+	public Date getBookingDate() {
 		return booking_date;
 	}
 
-	public void setBookingDate(Timestamp booking_date) {
-		this.booking_date = booking_date;
+	public void setBookingDate(Date date) {
+		this.booking_date = date;
 	}
 
 	public Integer getPeriod() {

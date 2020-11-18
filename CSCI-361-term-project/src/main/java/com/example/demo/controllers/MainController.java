@@ -59,14 +59,6 @@ public class MainController {
         return "profile";
     }
 
-  @RequestMapping("/bookingform")
-  public String bookingformpage() {
-      return "bookingform";
-  }
-  @RequestMapping("/bookingform/sucess")
-  public String bookcomplete() {
-      return "successbook";
-  }
 
 
 

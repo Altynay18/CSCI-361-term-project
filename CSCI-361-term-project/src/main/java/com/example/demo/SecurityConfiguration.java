@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/bookingsearch/**").permitAll()
                 .antMatchers("/search/**").permitAll()
-
+                .antMatchers("/bookingform/**").permitAll()
 
                 .antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")
                 .anyRequest().authenticated()

@@ -1,28 +1,109 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
-    <body>
-    
-    <form action="#">
-  <label for="guest_fname">First name:</label><br>
-  <input type="text" id="guest_fname" name="guest_fname" ><br>
-  <label for="guest_Lname">Last name:</label><br>
-  <input type="text" id="guest_Lname" name="guest_Lname" ><br><br>
-  <label for="guest_mail">Email address:</label><br>
-  <input type="text" id="guest_mail" name="guest_phone" ><br>
- <label for="guest_phone">Phone Number:</label><br>
-  <input type="text" id="guest_phone" name="guest_phone" ><br>
-  <label for="guest_who">Who is guest:</label><br>
-  <input type="radio" id="guest_self" name="guest_self" value="guest_self">
-  <label for="guest_self"> Me </label><br>
-  <input type="radio" id="guest_other" name="guest_other" value="guest_other">
-  <label for="guest_other"> Other </label><br>
-  <label for="guest_name">Guest Firstname and Lastname:</label><br>
-  <input type="text" id="guest_name" name="guest_name" ><br>
-  <br>
-  <a href="/bookingform/sucess"><button type="button">Book</button></a>
-</form> 
 
-    </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Book room</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<script type="text/javascript">
+</script>
+<body>
+
+<!-- create navigation bar ( header) -->
+
+<br>
+<br>
+<br>
+<br>
+
+<div align="center">
+        <h1>Book Room</h1>
+       <!--  <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+        --> <br />
+      <form action="#" th:action="@{/bookingform/success}" th:object="${booking}"
+            method="post" modelAttribute = "booking">
+            <table border="0" cellpadding="10">
+                
+
+  <!--                <tr>             
+                    <td>HotelId:</td>
+                    <td>
+                        <input type="text" th:field="*{hotel.hotelid}"/>
+                    </td>
+                </tr> -->
+	  <!-- 		<div sec:authorize="isAnonymous()">  -->        
+                 <tr>             
+                    <td>GuestId:</td>
+                    <td>
+                        <input type="text" th:field="*{guest.guestId}"/>
+                    </td>
+                </tr>
+                
+           <tr>
+                    <td>Guest Name:</td>
+                    <td><input type="text" th:field="*{guest.name}" /></td>
+                </tr>
+                 <tr>
+                    <td>Guest Surname:</td>
+                    <td><input type="text" th:field="*{guest.surname}" /></td>
+                </tr>
+                 <tr>
+                    <td>Guest Email:</td>
+                    <td><input type="text" th:field="*{guest.email}" /></td>
+                </tr> 
+                <!-- </div>  -->
+                 <tr>             
+                    <td>Booking ID:</td>
+                    <td>
+                        <input type="text" th:field="*{bookingId}"/>
+                    </td>
+                </tr>  
+           <tr>
+                             
+                    <td>Booking Date:</td>
+                    <td>
+                        <input type="date" th:field="*{bookingDate}"  />
+                    </td>
+                </tr>   
+                <tr>             
+                    <td>From Date:</td>
+                    <td>
+                        <input type="date" th:field="*{fromDate}" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>To Date:</td>
+                    <td><input type="date" th:field="*{toDate}" /></td>
+                </tr> 
+                
+          <tr>
+                    <td>Room Type Name:</td>
+                    <td><input type="text" th:field="*{room.room_id.room_type_id.room_type_name}" /></td>
+                </tr>   
+                
+          <tr>
+                    <td>Room Number:</td>
+                    <td><input type="text" th:field="*{room.room_id.room_number}" /></td>
+                </tr> 
+          <tr > 
+                    <td>Bill:</td>
+                    <td><input type="text" th:field="*{bill}" /></td>
+                </tr> 
+
+                               
+                <tr>
+                    <td colspan="2" ><button type="submit">Save</button> </td>
+                </tr>
+            </table>
+        </form> 
+    </div>
+</body>
 </html>

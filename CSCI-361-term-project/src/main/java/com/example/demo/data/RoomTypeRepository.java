@@ -6,7 +6,9 @@ import java.util.TreeSet;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface RoomTypeRepository extends CrudRepository<RoomType, Integer> {
+import com.example.demo.data.RoomType.RoomTypeId;
+
+public interface RoomTypeRepository extends CrudRepository<RoomType, RoomTypeId> {
 	
 	@Query("select h.room_type_id.room_type_name from RoomType h" )
     TreeSet<String> findRoomTypesOnly();

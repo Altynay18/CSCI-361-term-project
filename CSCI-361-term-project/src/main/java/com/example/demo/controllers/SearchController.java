@@ -102,6 +102,7 @@ public class SearchController {
 		} else {
 			room = roomRepository.findRoomsById(roomid);
 		}
+	
 		return room;
 	}
 
@@ -110,10 +111,7 @@ public class SearchController {
 //    return "bookingpage";
 //}
 
-@RequestMapping("/bookingform")
-public String hotelbookingpage() {
-    return "bookingform";
-}
+
 
 }
 

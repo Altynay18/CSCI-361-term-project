@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import org.springframework.stereotype.Repository;
 
-public interface GuestRepository extends CrudRepository<Guest, Integer>{
+public interface GuestRepository extends CrudRepository<Guest, String>{
 	
 	@Query("select g from Guest g where g.email=?1")
 	Optional<Guest> findByEmail(String email);
