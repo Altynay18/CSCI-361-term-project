@@ -14,18 +14,18 @@ table {
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
 <h2>Search Bookings</h2>
 <p>Use the input field to search for a specific booking.</p>
-
+<form>
 <label for="browser">Booking Id:</label>
-<input type="text" id="bookingId">
+<input type="number" id="bookingId">
 
 <label for="browser">Guest Id:</label>
-<input type="text" id="guestId">
+<input type="number" id="guestId">
 
 <label for="browser">Guest Email:</label>
 <input type="text" id="guestEmail">
 
 <input type="submit" value="Search" id="search" onclick="bookingList()">
-
+</form>
 <br> <br>
 <label for="browser">Existing bookings:</label>
 <br>
@@ -66,7 +66,8 @@ function bookingList() {
         		$("#my-list").append("<details><summary>Booking Id: "+e.bookingId
         				+"&nbsp;&nbsp;&nbsp;&nbsp; Guest Id: "+e.guest.guestId+"&nbsp;&nbsp;&nbsp;&nbsp;"
         				+"<a href=\"/bookingsearch/edit/"+e.bookingId +"\"><button type=\"button\">Change"
-        				+"</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"/bookingsearch/delete/" +e.bookingId +"\"><button type=\"button\">Cancel"
+        				+"</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"/bookingsearch/delete/" +e.bookingId 
+        				+"\"><button type=\"button\">Cancel"
         				+"</button></a></summary><p>Booking Date: " + e.bookingDate +"<br> From: "
         				+ e.fromDate + ". To: " + e.toDate + "<br> Room Type: "
         				+ e.room.room_id.room_type_id.room_type_name + ". Room Number: "

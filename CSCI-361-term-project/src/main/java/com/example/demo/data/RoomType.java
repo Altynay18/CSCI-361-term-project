@@ -17,6 +17,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="room_type")
@@ -73,6 +76,7 @@ public class RoomType implements Serializable {
 
 	private Integer capacity;
 	
+	@JsonManagedReference 
 	@MapsId("hotel_id")
 	@JoinColumn(name="hotel_id", referencedColumnName="hotel_id")
 	@ManyToOne
