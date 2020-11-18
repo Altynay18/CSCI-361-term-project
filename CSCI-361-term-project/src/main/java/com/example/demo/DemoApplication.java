@@ -30,7 +30,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication implements CommandLineRunner {
 
     @Autowired
     private JavaMailSender javaMailSender;

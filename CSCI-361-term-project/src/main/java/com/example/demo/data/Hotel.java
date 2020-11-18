@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.JoinColumn;
 
@@ -34,14 +33,12 @@ public class Hotel {
   private String city;
   
   private String name;
-  
-  @JsonBackReference
+
   @OneToMany(mappedBy="hotel")
   private Set<RoomType> roomTypes;
-  
-
-  @JsonManagedReference
+  @JsonBackReference
   @ManyToMany(mappedBy = "hotels", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+
   private Set<Season> seasons;
 //  public void addSeasons(Season season) {
 //      seasons.add(season);
@@ -51,10 +48,7 @@ public class Hotel {
   public Set<Season> getSeasons() {
       return seasons;
   }
-  
-  public void setSeasons(Set<Season> s) {
-      seasons = s;
-  }
+//  
   
   public int getId() {
     return hotel_id;
@@ -84,13 +78,5 @@ public class Hotel {
   public void setCity(String email) {
     this.city = email;
   }
-  
-  public Set<RoomType> getRoomTypes() {
-		return roomTypes;
-	}
-
-	public void setRoomTypes(Set<RoomType> roomTypes) {
-		this.roomTypes = roomTypes;
-	}
 }
 

@@ -25,7 +25,6 @@ import com.example.demo.data.Room;
 import com.example.demo.data.Room.RoomId;
 import com.example.demo.data.RoomRepository;
 import com.example.demo.data.RoomTypeRepository;
-import com.example.demo.data.Season;
 
 
 @Controller // This means that this class is a Controller
@@ -45,6 +44,8 @@ public class SearchController {
   @Autowired
   private RoomTypeRepository roomTypeRepository;
   
+  @Autowired
+  private DayoffRepository dayoffRepository;
 
   @GetMapping(path="/all")
   public @ResponseBody Iterable<Hotel> getAllUsers() {
@@ -68,12 +69,6 @@ public class SearchController {
 	}
   }
   
-  @GetMapping(path="/season")
-  public @ResponseBody Iterable<String> getSeasons() {
-	  return hotelRepository.findSeasons();
-	  }
-  
-  
   @GetMapping(path="/roomtypes")
   public @ResponseBody Iterable<String> getRoomTypes(@RequestParam(value = "country", required=false) String country,
 		  @RequestParam(value = "city", required=false) String city) {
@@ -85,16 +80,18 @@ public class SearchController {
   public @ResponseBody Iterable<Room> getAvailableRooms(@RequestParam(value = "city", required=false) String city,
 		  @RequestParam(value = "country", required = false) String country, 
 		  @RequestParam(value = "roomtype", required = false) String roomType,
-		  @RequestParam(value = "capacity", required = false) Integer capacity,
-		  @RequestParam(value = "from", required = true) String from,
-		  @RequestParam(value = "to", required = true) String to,
-		  @RequestParam(value = "season", required = false) String season) {
+		  @RequestParam(value = "capacity", required = false) String capacity,
+		  @RequestParam(value = "from", required=false) String from,
+		  @RequestParam(value = "to", required = false) String to) {
 	  
-		Set<Integer> h =  hotelRepository.findHotelIdByCountryAndCityAndSeason(country, city, season);
+		Set<Integer> h = hotelRepository.findHotelIdByCountryAndCity(country, city);
 		Iterable<Room> room = new ArrayList<>();
-		System.out.println("season " + season);
 		
-		Iterable<RoomId> roomid = roomRepository.findRoomIdByRoomType(h, roomType, capacity);
+		Integer cap = null;
+		if (capacity != null) {
+			cap = Integer.parseInt(capacity);
+		}
+		Iterable<RoomId> roomid = roomRepository.findRoomIdByRoomType(h, roomType, cap);
 		
 		if (!roomid.iterator().hasNext()) return room;
 		
@@ -108,13 +105,6 @@ public class SearchController {
 	
 		return room;
 	}
-  
-  @GetMapping(path="/test")
-  public @ResponseBody Iterable<Hotel> getH() {
-    // This returns a JSON or XML with the users
-    return hotelRepository.findHotelIdByCountryAndCityAndSeason2(null, null, null);
-//	  return hotelRepository.findAllSeasons("Winter");
-  }
 
 //@RequestMapping("/hotel/{id: [0-9]+}")
 //public String welcome() {

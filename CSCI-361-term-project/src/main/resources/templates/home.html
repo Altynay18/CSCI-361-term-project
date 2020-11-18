@@ -49,8 +49,6 @@
             <div class="col p-4 d-flex flex-column position-static">
         <h3 th:text="${el.getCountry()}" style="font-family: 'Cormorant Garamond', serif;"/>
         <p th:text="${el.getCity()}" style="font-family: 'Cormorant Garamond', serif;"/>
-        <th:block th:each="roomType : ${el.getRoomTypes()}" >
-    <td  th:text="${roomType.getRoom_type_id().getRoom_type_name()}"></td></th:block>
             </div>
         </div>
     </div>

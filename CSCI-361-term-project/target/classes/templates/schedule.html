@@ -76,7 +76,7 @@
 			<p th:text="${'E-mail: ' + book.getEmployee().getEmail()}"></p>
 			<p th:text="${'Phone: ' + book.getEmployee().getPhone()}"></p>
 			<p
-				th:text="${'Hotel: ' + book.getEmployee().getHotel().getHotelName()+' (' + 
+				th:text="${'Hotel: ' + book.getEmployee().getHotel().getName()+' (' + 
 		book.getEmployee().getHotel().getCity()+', ' + book.getEmployee().getHotel().getCountry()+')'}"></p>
 			<div th:text="${'Working Hours: '}"></div>
 			<div th:each="w : ${book.getFullWeekdays()}">
