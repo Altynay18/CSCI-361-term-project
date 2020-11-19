@@ -24,5 +24,9 @@ public interface HotelRepository extends CrudRepository<Hotel, Integer> {
 	
 	@Query("select h.hotel_id from Hotel h where (h.country_name=?1 or ?1=null) and (h.city=?2 or ?2=null) ")
 	TreeSet<Integer> findHotelIdByCountryAndCity(String country, String city);
+	
+	@Query("select h from Hotel h where(h.name=?1 or ?1=null) and"
+			+ "(h.hotel_id=?2 or ?2=null)")
+	Iterable<Hotel> findSpecificHotel(String name, Integer hotelid);
 }
 
