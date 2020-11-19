@@ -19,14 +19,14 @@ table {
         <h1>Create New Season</h1>
         <br />
      
-     <select class="form-control" name="example" id="example" multiple="multiple">
+<!--      <select class="form-control" name="example" id="example" multiple="multiple">
      <option value="0">ALL</option>
      <option th:each="hotel : ${listHotels}"
              th:value="${hotel.id}"
              th:field="*{listHotels}"
              th:text="${hotel.hotelName}">
      </option>
-</select>
+</select> -->
         <form action="#" th:action="@{/seasonsearch/save}" th:object="${season}"
             method="post">
             
@@ -58,6 +58,16 @@ table {
           <tr>
                     <td colspan="2"><button type="submit">Save</button> </td>
              </tr>
+<!--              <div>
+              <select class="form-control" name="example" id="example" multiple="multiple">
+     <option value="0">ALL</option>
+     <option th:each="hotel : ${listHotels}"
+             th:value="${hotel.id}"
+             th:field="*{listHotels}"
+             th:text="${hotel.hotelName}">
+     </option>
+</select> 
+             </div> -->
             </table>
         </form>
     </div>
