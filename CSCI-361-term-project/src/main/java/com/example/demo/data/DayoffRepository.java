@@ -1,6 +1,7 @@
 package com.example.demo.data;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -16,5 +17,10 @@ public interface DayoffRepository extends CrudRepository<Dayoff, Integer> {
 			+ "and month(d.dayoff_id.day) = month(curdate()) "
 			+ "order by d.dayoff_id.day")
 	List<Dayoff> findThisMonthDayoffs(Integer id);
+	
+	@Query("select d from Dayoff d where d.dayoff_id.employee_id = ?1 "
+			+ "and d.dayoff_id.day >= ?2 and d.dayoff_id.day <= ?3 "
+			+ "order by d.dayoff_id.day")
+	List<Dayoff> findNumberDayoffs(Integer id, Date f, Date t);
 
 }

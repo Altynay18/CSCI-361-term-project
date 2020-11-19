@@ -1,5 +1,6 @@
 package com.example.demo.data;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.Duration;
@@ -119,6 +120,18 @@ public class Schedule {
 		return res;
 	}
 	
+	public int getWorkedDays(LocalDate from, LocalDate to) {
+		int res = 0;
+		List<String> weekdays = getFullWeekdays();
+		for(String s : weekdays) {
+		    LocalDate first = from.with(TemporalAdjusters.next(DayOfWeek.valueOf(s.toUpperCase())));
+		    LocalDate last = to.with(TemporalAdjusters.previous(DayOfWeek.valueOf(s.toUpperCase())));
+		    res += (int) ChronoUnit.WEEKS.between(first, last) + 1;
+		}
+		
+		return res;
+	}
+	
 	public LocalDate getCurDate() {
 		return LocalDate.now();
 	}
@@ -135,8 +148,11 @@ public class Schedule {
 	}
 	
 	public int totalSalary() {
-		
 		return getSalary_per_hour()*hourPerDay()*getWorkedDays();
 	}
 	
+	public int specificSalary() {
+		return getSalary_per_hour()*hourPerDay();
+	}
 }
+

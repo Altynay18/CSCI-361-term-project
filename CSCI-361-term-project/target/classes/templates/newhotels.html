@@ -1,0 +1,168 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+table {
+  border: 1px solid black;
+}
+</style>
+</head>
+
+<body>
+<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+<h2>Search Hotels for Season</h2>
+<p>Use the input field to search for a specific season.</p>
+
+
+ <table>
+        <thead>
+            <tr>
+                <th>Season Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Rate</th>
+ 
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:object="${season}">
+                <td th:text="*{seasonName}">Season Name</td>
+                <td th:text="*{startDate}">Start Date</td>
+                <td th:text="*{endDate}">End Date</td>
+                <td th:text="*{rate}">Rate</td>
+<!--                  <th:block th:each="{hotel : ${listHotels}" >
+                <td  th:text="*{hotel}">Hotel Name</td></th:block> -->
+<!--                 <td>
+                    <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
+                </td> 
+                <td>
+                    <a th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
+                </td> -->   
+            </tr>
+
+ 
+ 
+           
+     
+<!--                  <th:block th:each="{hotel : ${listHotels}" >
+                <td  th:text="*{hotel}">Hotel Name</td></th:block> -->
+<!--                 <td>
+                    <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
+                </td> 
+                <td>
+                    <a th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
+                </td> -->   
+      
+        </tbody>
+    </table>
+    <table>
+     <thead>
+            <tr>
+                <th>Hotel Name</th>
+                <th>Hotel Id</th>
+                <th>Hotel City</th>
+                <th>Hotel Country</th>
+ 
+            </tr>
+        </thead>
+            <tbody>
+                <tr>
+        <tr th:if="${listHotels} != null">
+           <tr th:each="hotel : ${listHotels}">
+             <td th:text="*{hotel.hotelName}">Hotel Name</td>
+              <td th:text="*{hotel.id}">Hotel Id</td>
+              <td th:text="*{hotel.city}">Hotel City</td>
+              <td th:text="*{hotel.country}">Hotel Country</td>
+           </tr>
+           </tbody>
+    </table>
+
+<!--             <div>
+              <select class="form-control" th:object= "${season}"th:action="@{/seasonsearch/save}" name="example" id="example" multiple="multiple"  method="post">
+     <option value="0">ALL</option>
+     <option th:each="hotel : ${listHotels}"
+             th:value="${hotel.id}"
+             th:field="${listHotels}"
+             th:text="${hotel.hotelName}">
+     </option>
+</select> 
+             </div>  -->
+             
+<br>
+
+<label for="browser">Hotel Name:</label>
+<input type="text" id="name">
+
+<label for="browser">Hotel Id:</label>
+<input type="text" id="hotelid">
+
+<input type="submit" value="Search" id="search" onclick="hotelList()">
+
+<br> <br>
+<label for="browser">Existing hotels:</label>
+<br>
+<br>
+<div id="my-list"></div>
+<br>
+<table style="width:100%" id="my-list"></table>
+<script th:inline="javascript">
+var seasName = [[${season.seasonName}]];
+</script>
+<script >
+
+function hotelList() {
+	var myUrl = "/seasonsearch/findhotels?";
+	
+	var bid = document.getElementById("name").value;
+	var gid = document.getElementById("hotelid").value;
+ 	if (bid != "") {
+		myUrl = myUrl+"name="+bid+"&";
+	}  
+	if (gid != "") {
+		myUrl = myUrl+"hotelid="+gid+"&";
+	}
+
+	$.ajax({
+        url : myUrl,
+        dataType : 'json',
+        success : function(r) {
+        	$("#my-list").html("");
+        	if(!$.trim(r)){
+        		$("#my-list").append("Sorry, No booking found. Try to search for other criterias.");
+        	
+        	} else {
+        	r.forEach(function (e) {
+        		$("#my-list").append("<summary>Hotel Name: "+ e.hotelName
+        				+"&nbsp;&nbsp;&nbsp;&nbsp; Hotel Id: "+ e.id
+        				+"&nbsp;&nbsp;&nbsp;&nbsp; Hotel Country: " + e.country
+        				+"&nbsp;&nbsp;&nbsp;&nbsp; Hotel City: " + e.city
+        			/* 	+"<a href=\"/bookingsearch/edit/"+e.bookingId +"\"><button type=\"button\">Change" */
+        			/* 	+"</button></a>" */
+        				+"&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"http://localhost:8080/seasonsearch/savehotel/" +e.id+ "/"+ seasName + "\"><button type=\"button\">Add"
+        				+"</button></a></summary>"
+        				
+     /*    				<p>Booking Date: " + e.bookingDate +"<br> From: "
+        				+ e.fromDate + ". To: " + e.toDate + "<br> Room Type: "
+        				+ e.room.room_id.room_type_id.room_type_name + ". Room Number: "
+        				+ e.room.room_id.room_number + "<br> Bill: "+e.bill + "<br> Guest name: "+ e.guest.name
+        				+ " " + e.guest.surname + "<br> Guest e-mail: " + e.guest.email
+        				+"</p>"  */
+        				+ ""); 
+        	
+          }); 
+
+        }}
+    });
+
+}
+
+$(document).ready(function () {
+	hotelList();
+});
+</script>
+<!--  <a class="btn btn-outline-primary" th:href="@{search}"><button type= "button">Save all changes</button></a> -->
+</body>
+</html> 

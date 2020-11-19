@@ -27,7 +27,8 @@ table {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Rate</th>
-                <th>Hotels</th>
+                <th>Hotels Info</th>
+                <th>Delete Season</th>
  
             </tr>
         </thead>
@@ -37,8 +38,8 @@ table {
                 <td th:text="${season.startDate}">Start Date</td>
                 <td th:text="${season.endDate}">End Date</td>
                 <td th:text="${season.rate}">Rate</td>
-                <th:block th:each="hotel : ${season.hotels}" >
-                <td  th:text="${hotel.hotelName}">Hotel Name</td></th:block>
+      <!--          <th:block th:each="hotel : ${season.hotels}" >
+                <td  th:text="${hotel.hotelName}">Hotel Name</td></th:block> -->
                 <td>
                     <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
                 </td> 

@@ -15,35 +15,41 @@ table {
 
 <body>
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
+<a class="btn btn-outline-primary" th:href="@{/manager/search}">Employee search</a>
 
 	<div class="container">
 		<h2  th:text="${employee.getEmployee().getName() + ' ' + employee.getEmployee().getSecond_name()}"></h2>
-				<h3 th:text="${employee.getEmployee().getEmployee_type()}"></h3>
+		<h3 th:text="${employee.getEmployee().getEmployee_type()}"></h3>
+		
 		<ul class="nav nav-tabs" id="myTab">
-			<li class="nav-item"><a href="#home" class="nav-link active" data-toggle="tab">Change schedule</a></li>
-			<li class="nav-item"><a href="#menu1" class="nav-link active" data-toggle="tab">Calculate Salary</a></li>
-			<li class="nav-item"><a href="#menu2" class="nav-link active" data-toggle="tab">Add day-offs</a></li>
+			<li class="nav-item"><a href="#schedule" class="nav-link active" data-toggle="tab">Change schedule</a></li>
+			<li class="nav-item"><a href="#salary" class="nav-link active" data-toggle="tab">Calculate Salary</a></li>
+			<li class="nav-item"><a href="#dayoff" class="nav-link active" data-toggle="tab">Add day-offs</a></li>
 		</ul>
 
 		<div class="tab-content">
-			<div id="home" class="tab-pane fade in active">
+			<div id="schedule" class="tab-pane fade in active">
 				<h3 th:text="${'Schedule'}"></h3>
+				<label th:text="${'Current schedule: '}"></label>
+				<div th:each="w : ${employee.getFullWeekdays()}">
+					<div
+						th:text="${w +': ' + employee.getFrom() + ' - ' + employee.getTo()}"></div>
+				</div>
+				<br>
+				<label>Fill the form and save to change the schedule</label>
 				<form action="@{/manager/search}" th:action="@{/manager/save}"
 					th:object="${employee}" method="post">
-					<p>
-						Employee Id: <input type="text" th:field="*{employee_id}" readonly />
-					</p>
+
+					<input type="hidden" th:field="*{employee_id}" />
+
 					<p>
 						Working Hours: <input type="text" th:field="*{from}" /> - <input
 							type="text" th:field="*{to}" />
 					</p>
-					<!--  	<p>Working Weekdays: <input type="text" th:field="*{weekdays}"/></p> -->
-					<!--  	<p>M for Monday, T for Tuesday, W for Wednesday, R for Thursday, F for Friday, D for Saturday, S for Sunday</p> -->
 					<p>
-						<label>Weekdays: <input type="checkbox" name="weekdays"
+						Weekdays: <input type="checkbox" name="weekdays"
 							th:each="w : ${weekday}" th:text="${w}"
 							th:value="${#strings.substring(w,0,1)}" th:field="*{weekdays}" />
-						</label>
 					</p>
 					<p>
 						Salary per hour: <input type="text" th:field="*{salary_per_hour}" />
@@ -51,36 +57,62 @@ table {
 
 					<button type="submit">Save</button>
 				</form>
+				
 				<p th:text="${message}"></p>
-			<div th:text="${'Working Hours: '}"></div>
-			<div th:each="w : ${employee.getFullWeekdays()}">
-				<div th:text="${w +': ' + employee.getFrom() + ' - ' + employee.getTo()}"></div>
 			</div>
-			</div>
-			<div id="menu1" class="tab-pane fade">
+			
+			
+			<div id="salary" class="tab-pane fade">
 				<h3 th:text="${'Salary'}"></h3>
 				<p th:text="${'Current date: '+employee.getCurDate()}"></p>
 				<br>
 				<div
-					th:with="result=${employee.totalSalary()-employee.getSalary_per_hour()*employee.hourPerDay()*monthdayoff.size()}">
-					<p>This month salary:</p>
+					th:with="result=${employee.totalSalary()-employee.getSalary_per_hour()*employee.hourPerDay()*monthdayoff}">
+					<label>This month salary:</label>
 					<p th:text="${'Planned working days: ' + employee.getWorkedDays()}"></p>
-					<p th:text="${'Number of days-off: ' + monthdayoff.size()}"></p>
+					<p th:text="${'Number of days-off: ' + monthdayoff}"></p>
 					<p th:text="${'Hours per day: ' + employee.hourPerDay()}"></p>
 					<p th:text="${'Salary per hour: ' + employee.getSalary_per_hour()}"></p>
-					<p th:text="${'Total salary: ' + result}"></p>
+					<p th:text="${'TOTAL SALARY: ' + result}"></p>
+				</div>
+				<br>
+				<label>Optional calculation: </label>
+				<br>
+				<form action="@{/manager/edit}+employee.getEmployee_id()"
+				th:action="@{/manager/salary}"
+					 method="post">
+				<input type="hidden" th:name="id"
+						th:value="${employee.getEmployee_id()}" />
+				From: <input type="date" th:name="fromS" /> To: <input type="date" th:name="toS" /> <input type="submit"
+						value="Calculate" />
+				</form>
+				<p th:text="${message3}"></p>
+				<div th:if="${workdays!=null}"
+					th:with="result2=${employee.getSalary_per_hour()*employee.hourPerDay()*(workdays-dayoffs)}">
+					<label th:text="${'Salary for the dates: ' + froms + ' - ' + tos}"></label>
+					<p th:text="${'Planned working days: ' + workdays}"></p>
+					<p th:text="${'Number of days-off: ' + dayoffs}"></p>
+					<p th:text="${'Hours per day: ' + employee.hourPerDay()}"></p>
+					<p th:text="${'Salary per hour: ' + employee.getSalary_per_hour()}"></p>
+					<p th:text="${'TOTAL SALARY: ' + result2}"></p>
 				</div>
 			</div>
-			<div id="menu2" class="tab-pane fade">
+			
+			
+			<div id="dayoff" class="tab-pane fade">
 				<h3>DayOffs</h3>
+				<label>Dayoffs history: </label>
 				<div th:each="d : ${dayoff}">
-					<p th:text="${d.getDayoff_id().getDay()}"></p>
+					<span th:text="${d.getDayoff_id().getDay()}"></span> 
+					<a th:href="${'/manager/delete?id='+employee.getEmployee_id()+'&day='+d.getDayoff_id().getDay()}">
+					<button type="button">Delete</button></a>
 				</div>
-
+				<br>
+				<label>Add new day-off: </label>
 				<form action="@{/manager/edit}+employee.getEmployee_id()"
 					th:action="@{/manager/dayoff}" method="post">
-					<label>Employee Id:</label> <input type="text" th:name="id"
-						th:value="${employee.getEmployee_id()}" readonly /> <label>Day:</label>
+					<input type="hidden" th:name="id"
+						th:value="${employee.getEmployee_id()}" /> <label>Day:</label>
 					<input type="date" th:name="day" /> <input type="submit"
 						value="Add" />
 				</form>

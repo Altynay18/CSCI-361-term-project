@@ -14,7 +14,7 @@ table {
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
 <h2>Search Bookings</h2>
 <p>Use the input field to search for a specific booking.</p>
-<form>
+<form onsubmit="return false">
 <label for="browser">Booking Id:</label>
 <input type="number" id="bookingId">
 
@@ -25,6 +25,7 @@ table {
 <input type="text" id="guestEmail">
 
 <input type="submit" value="Search" id="search" onclick="bookingList()">
+<input type="reset">
 </form>
 <br> <br>
 <label for="browser">Existing bookings:</label>

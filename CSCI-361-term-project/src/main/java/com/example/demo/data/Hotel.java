@@ -43,11 +43,11 @@ public class Hotel {
   @JsonManagedReference
   @ManyToMany(mappedBy = "hotels", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   private Set<Season> seasons;
-//  public void addSeasons(Season season) {
-//      seasons.add(season);
-//      season.getHotels().add(this);
-//  }
-//  
+  public void addSeasons(Season season) {
+      seasons.add(season);
+      season.getHotels().add(this);
+  }
+  
   public Set<Season> getSeasons() {
       return seasons;
   }
