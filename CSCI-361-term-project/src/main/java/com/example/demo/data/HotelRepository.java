@@ -40,6 +40,10 @@ public interface HotelRepository extends CrudRepository<Hotel, Integer> {
 
 	@Query("select h from Hotel h join h.seasons s where s.season_name = ?1")
 	Iterable<Hotel> findAllSeasons(String id);
+	
+	@Query("select h from Hotel h where(h.name=?1 or ?1=null) and"
+			+ "(h.hotel_id=?2 or ?2=null)")
+	Iterable<Hotel> findSpecificHotel(String name, Integer hotelid);
 
 //	@Query("select dev from Device dev join dev.authorizedDrivers d where d = ?1")
 //	Set<Device> findDeviceByDriver(Driver driver);
