@@ -1,109 +1,132 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Book room</title>
+<meta charset="ISO-8859-1">
+<title>Book room</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 
 </head>
 <script type="text/javascript">
 </script>
 <body>
 
-<!-- create navigation bar ( header) -->
+	<!-- create navigation bar ( header) -->
 
-<br>
-<br>
-<br>
-<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
-<div align="center">
-        <h1>Book Room</h1>
-       <!--  <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
-        --> <br />
-      <form action="#" th:action="@{/bookingform/success}" th:object="${booking}"
-            method="post" modelAttribute = "booking">
-            <table border="0" cellpadding="10">
-                
+	<div align="center">
+		<h1>Book Room</h1>
+		<!-- 	<div sec:authorize="isAuthenticated()">
+      Authenticated as <span sec:authentication="name"></span></div> -->
 
-                 <tr>             
-                    <td>HotelId:</td>
-                    <td>
-                        <input type="text" th:field="*{room.room_id.room_type_id.hotel_id}"/>
-                    </td>
-                </tr>
-	  <!-- 		<div sec:authorize="isAnonymous()">  -->        
-                 <tr>             
-                    <td>GuestId:</td>
-                    <td>
-                        <input type="text" th:field="*{guest.guestId}"/>
-                    </td>
-                </tr>
-                
-           <tr>
-                    <td>Guest Name:</td>
-                    <td><input type="text" th:field="*{guest.name}" /></td>
-                </tr>
-                 <tr>
-                    <td>Guest Surname:</td>
-                    <td><input type="text" th:field="*{guest.surname}" /></td>
-                </tr>
-                 <tr>
-                    <td>Guest Email:</td>
-                    <td><input type="text" th:field="*{guest.email}" /></td>
-                </tr> 
-                <!-- </div>  -->
-                 <tr>             
-                    <td>Booking ID:</td>
-                    <td>
-                        <input type="text" th:field="*{bookingId}"/>
-                    </td>
-                </tr>  
-           <tr>
-                             
-                    <td>Booking Date:</td>
-                    <td>
-                        <input type="date" th:field="*{bookingDate}"  />
-                    </td>
-                </tr>   
-                <tr>             
-                    <td>From Date:</td>
-                    <td>
-                        <input type="date" th:field="*{fromDate}" />
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>To Date:</td>
-                    <td><input type="date" th:field="*{toDate}" /></td>
-                </tr> 
-                
-          <tr>
-                    <td>Room Type Name:</td>
-                    <td><input type="text" th:field="*{room.room_id.room_type_id.room_type_name}" /></td>
-                </tr>   
-                
-          <tr>
-                    <td>Room Number:</td>
-                    <td><input type="text" th:field="*{room.room_id.room_number}" /></td>
-                </tr> 
-          <tr > 
-                    <td>Bill:</td>
-                    <td><input type="text" th:field="*{bill}" /></td>
-                </tr> 
+		<br />
 
-                               
-                <tr>
-                    <td colspan="2" ><button type="submit">Save</button> </td>
-                </tr>
-            </table>
-        </form> 
-    </div>
+		<form action="#" th:action="@{/bookingform/success}"
+			th:object="${booking}" method="post" modelAttribute="booking">
+			<table border="0" cellpadding="10">
+				<!--                 <div sec:authorize="hasRole('ROLE_ADMIN')">
+  This content is only shown to administrators.
+</div> -->
+
+
+				<!--  <div sec:authorize="isAnonymous()">    -->
+				<tr>
+					<td>GuestId:</td>
+					<td><input type="text" th:field="*{guest.guestId}" /></td>
+				</tr>
+
+				<tr>
+					<td>Guest Name:</td>
+					<td><input type="text" th:field="*{guest.name}" /></td>
+				</tr>
+				<tr>
+					<td>Guest Surname:</td>
+					<td><input type="text" th:field="*{guest.surname}" /></td>
+				</tr>
+				<tr>
+					<td>Guest Email:</td>
+					<td><input type="text" th:field="*{guest.email}" /></td>
+				</tr>
+				<tr>
+					<td>Identification type:</td>
+					<td><input type="text" th:field="*{guest.id_type}" /></td>
+				</tr>
+				<tr>
+					<td>Identification number:</td>
+					<td><input type="text" th:field="*{guest.id_number}" /></td>
+				</tr>
+				<tr>
+					<td>Phone number:</td>
+					<td><input type="text" th:field="*{guest.phone_number}" /></td>
+				</tr>
+				<tr>
+					<td>Mobile number:</td>
+					<td><input type="text" th:field="*{guest.mobile_number}" /></td>
+				</tr>
+				<tr>
+					<td>Address:</td>
+					<td><input type="text" th:field="*{guest.address}" /></td>
+				</tr>
+				<tr>
+					<td>Booking ID:</td>
+					<td><input type="text" th:field="*{bookingId}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+				<tr>
+
+					<td>Booking Date:</td>
+					<td><input type="date" th:field="*{bookingDate}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+				<tr>
+					<td>From Date:</td>
+					<td><input type="date" th:field="*{fromDate}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+
+				<tr>
+					<td>To Date:</td>
+					<td><input type="date" th:field="*{toDate}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+				<tr>
+					<td>HotelId:</td>
+					<td><input type="text"
+						th:field="*{room.room_id.room_type_id.hotel_id}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+				<tr>
+					<td>Room Type Name:</td>
+					<td><input type="text"
+						th:field="*{room.room_id.room_type_id.room_type_name}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+
+				<tr>
+					<td>Room Number:</td>
+					<td><input type="text" th:field="*{room.room_id.room_number}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+				<tr>
+					<td>Bill:</td>
+					<td><input type="text" th:field="*{bill}"
+						th:readonly="${param.action != 'edit'}" /></td>
+				</tr>
+
+
+				<td colspan="2"><button type="submit">Book</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>
