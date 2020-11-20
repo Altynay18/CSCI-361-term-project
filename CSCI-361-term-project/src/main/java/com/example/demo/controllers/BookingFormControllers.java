@@ -3,8 +3,16 @@ package com.example.demo.controllers;
 import java.security.Timestamp;
 
 import java.sql.Date;
+import java.time.Period;
+import java.util.Locale.Category;
 import java.util.Optional;
 
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.User;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticatedPrincipal;
@@ -20,8 +28,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.data.Booking;
 import com.example.demo.data.BookingRepository;
+import com.example.demo.data.CategoryRepository;
 import com.example.demo.data.Guest;
 import com.example.demo.data.GuestRepository;
+import com.example.demo.data.RoleRepository;
 import com.example.demo.data.Room;
 import com.example.demo.data.Room.RoomId;
 import com.example.demo.data.RoomRepository;
@@ -32,13 +42,17 @@ import com.example.demo.data.RoomTypeRepository;
 
 public class BookingFormControllers {
 	@Autowired
-	GuestRepository guestRepository;
-	@Autowired
-	RoomTypeRepository roomTyperepository;
-	@Autowired
-	RoomRepository roomrepository;
-	@Autowired
-	BookingRepository bookingRepository;
+	 GuestRepository guestRepository;
+	 @Autowired
+	 RoomTypeRepository roomTyperepository;
+	 @Autowired
+	 RoomRepository roomrepository;
+	 @Autowired
+	 BookingRepository bookingRepository;
+	 @Autowired
+	 CategoryRepository categoryRepository;
+	 @Autowired
+	 RoleRepository roleRepository;
 	@RequestMapping(path="/bookingform")
 	    public String bookingform(
 	    		//@PathVariable(value = "city", required=false) String city,
@@ -65,24 +79,16 @@ public class BookingFormControllers {
 	    		  ) {
 	    	
 	    	
-		//Authentication loggedInUser = SecurityConfigure.getContext().getAuthentication();
-
 	    	Booking book = new Booking();
 
-////	    	Guest user = guestRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()).get();
-//	    	org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//	    	String currentPrincipalName = authentication.getName();
-//	    	Guest user = guestRepository.findByEmail("").get();
-//	    	book.setGuest(user);
-	    	
-	    	book.setBookingId(1000);
 	    	long millis=System.currentTimeMillis();  
 	    	java.sql.Date date=new java.sql.Date(millis); 
 	    	book.setBookingDate(date);
 	    	book.setFromDate(from);
 	    	book.setToDate(to);
+	  		Period period = Period.between(from.toLocalDate(),to.toLocalDate());
+	  		bill = bill*period.getDays();
 	    	book.setBill(bill);
-	
 	    	RoomId guestroom = new RoomId();
 	    	guestroom.setRoom_number(roomnumber);
 	    	RoomTypeId roomtypeid = new RoomTypeId();
@@ -90,31 +96,15 @@ public class BookingFormControllers {
 	    	roomtypeid.setRoom_type_name(roomtypename);
 	    	guestroom.setRoom_type_id(roomtypeid);
 	    	book.setRoom(roomrepository.findById(guestroom).get());
-	    	
-	    	
-	    	//	    	Room room = new Room();
-
-
-	    	
-//	    	room_id.setRoom_number(roomid); 
-//	    	Integer roomnumber = roomRepository.findById(roomid).get().getRoom_id().getRoom_number();   	
-//	    	room_id.setRoom_number(roomid);
-	    	
-//	    	RoomType roomtype = roomTypeRepository.findById(roomid).get();
-
-//	    	TreeSet<Integer> hotelId = hotelRepository.findHotelIdByCountryAndCity(country, city);
-//	    	Integer hotelid = hotelId.first();
-//	    	TreeSet<String> roomtype = roomTypeRepository.findRoomTypeByHotelId(hotelId);
-//	    	
-//	    	
-//	  
-	 
 	    	model.addAttribute("booking", book);
 	    	return "bookingform";
 	    	}
-	
-	  @RequestMapping("bookingform/success")
-	  public String saveProduct(@ModelAttribute("booking") Booking booking) {
+
+//@WebService()
+//    @WebMethod()
+//    @RolesAllowed("basicUser")
+	@RequestMapping("bookingform/success")
+	public String redirectWithUsingRedirectView(@ModelAttribute("booking") Booking booking) {
 
 				Booking book = new Booking();
 				book.setBookingDate(booking.getBookingDate());
@@ -122,20 +112,38 @@ public class BookingFormControllers {
 				book.setBookingId(booking.getBookingId());
 				book.setFromDate(booking.getFromDate());
 				book.setToDate(booking.getToDate());
-			
-				RoomId rid = new RoomId();
-				rid.setRoom_number(booking.getRoom().getRoom_id().getRoom_number());
-				RoomTypeId rt = new RoomTypeId();
-				rt.setHotel_id(booking.getRoom().getRoom_id().getRoom_type_id().getHotel_id());
-				rt.setRoom_type_name(booking.getRoom().getRoom_id().getRoom_type_id().getRoom_type_name());
-				rid.setRoom_type_id(rt);
-				book.setRoom(roomrepository.findById(rid).get());
+	//			org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//				if(!auth.isAuthenticated()) {
+//				String guestmail = booking.getGuest().getEmail();
+////				Guest user = guestRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()).get();
+////	    	org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+////	    	String currentPrincipalName = authentication.getName();
+////	    	Guest user = guestRepository.findByEmail("").get();
+////	    	book.setGuest(user);
+//				
+				String guestmail = booking.getGuest().getEmail();
+				if(guestRepository.findByEmail(guestmail).isEmpty()) {
+					com.example.demo.data.Category basic = categoryRepository.findByCategory("basic");
+			  		booking.getGuest().setCategory(basic);
+			  		booking.getGuest().setRole(roleRepository.findByRoleName("guest"));
+			  		guestRepository.save(booking.getGuest());
+				}else {
+					booking.setGuest(guestRepository.findByEmail(guestmail).get());
+				}
+//				}else {
+//					
+//					booking.setGuest(guestRepository.findByEmail(auth.getName()).get());
+//				}
 				
-				//TODO: add guest info (need only id)
-				
+		  		Period period = Period.between(booking.getFromDate().toLocalDate(),booking.getToDate().toLocalDate());
+		  		booking.setPeriod(period.getDays());
+		  		book.setGuest(booking.getGuest());
+		  		book.setPeriod(8);
+		  		book.setRoom(booking.getRoom());
+
 				bookingRepository.save(book);		
 		  
-		    return "home";
+				return "redirect:/ ";
 		}
 
 }
