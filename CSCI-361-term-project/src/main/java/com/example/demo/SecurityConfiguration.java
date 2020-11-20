@@ -58,7 +58,7 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
                     .antMatchers("/bookingform").permitAll()
                     .antMatchers("/bookingupdate").permitAll()
                     .antMatchers("/home").permitAll()
-                    .antMatchers("/schedule").hasAnyAuthority("MANAGER")
+                    .antMatchers("/manager").hasAnyAuthority("MANAGER")
                     .antMatchers("/bookingsearch").hasAnyAuthority("DESKCLERK")
                     .antMatchers("/employee").permitAll()
                     .antMatchers("/schedule").permitAll()
@@ -119,7 +119,7 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 
-            http.antMatcher("/login").authorizeRequests()
+            http.authorizeRequests()
                     // URLs matching for access rights
                     .antMatchers("/").permitAll()
                     .antMatchers("/login").permitAll()
