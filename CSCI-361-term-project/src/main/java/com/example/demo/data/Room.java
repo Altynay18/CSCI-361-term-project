@@ -78,9 +78,27 @@ public class Room implements Serializable{
 	@ManyToOne
     private RoomType room_type;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "room")
 	private Set<Booking> bookings;
+	
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+	
+	public void setBookings(Set<Booking> booking) {
 
+        this.bookings.clear();
+
+        // Assuming that by passing null or empty arrays, means that you want to delete
+        // all GuestDetails from this RoomReservation entity
+        if (booking == null || booking.isEmpty()){
+            return;
+        }
+
+        booking.forEach(g -> g.setRoom(this));
+        this.bookings.addAll(booking);
+ }
 	public RoomId getRoom_id() {
 		return this.room_id;
 	}
