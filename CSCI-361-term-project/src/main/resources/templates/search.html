@@ -1,61 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 table {
   border: 1px solid black;
 }
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
 </style>
 </head>
 
-<body>
+<body style="background-color: white">
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
-<h2>Search Available rooms</h2>
-<p>Click on the button to open the dropdown menu, and use the input field to search for a specific available room.</p>
 
-<form onsubmit="return false">
+<div style="background-color: white">
 
-<h3>Choose period: </h3>
-<label for="browser">From:</label>
-  <input type="date" id="from-date" required>
+<h2 style="font-family: 'Cormorant Garamond', serif;" align="center">Search Available rooms</h2>
+<h3 style="font-family: 'Cormorant Garamond', serif;" align="center">Click on the button to open the dropdown menu, <br> use the input field to search for a specific available room.</h3>
 
-<label for="browser">To:</label>
-  <input type="date" id="to-date" required>
-  
-  <input type="submit" value="Search" id="search" onclick="availableRooms()">
-  <input type="reset">
-  
-<h3>Additional criteria: </h3>
+  <form class="w3-container" style="margin-top: 40px; margin-left: 500px; margin-right: 500px; background-color: white">
+      <label style="font-family: 'Cormorant Garamond', serif;" for="browser">Country:</label><br>
+      <input  class = "w3-input w3-border" list="country" id="myCountry" onchange="getCityList(),getRoomtypeList()"><br>
+      <datalist id="country">
+      </datalist>
 
-<label for="browser">Country:</label>
-<input list="country" id="myCountry" onchange="getCityList(),getRoomtypeList()">
-<datalist id="country">
+      <label style="font-family: 'Cormorant Garamond', serif;" for="browser">City:</label><br>
+      <input  class = "w3-input w3-border" list="city" id="myCity" onchange="getRoomtypeList()"><br>
+      <datalist id="city">
+      </datalist>
+
+      <label style="font-family: 'Cormorant Garamond', serif;" for="browser">Room Type:</label>
+      <input  class = "w3-input w3-border" list="roomtype" id="myRoomtype">
+      <datalist id="roomtype">
+      </datalist>
+<br>
+      <label style="font-family: 'Cormorant Garamond', serif;" for="browser">Capacity:</label>
+      <input  class = "w3-input w3-border" list="capacity" id="myCapacity">
+      <datalist id="capacity">
 </datalist>
+      <br>
+      <label style="font-family: 'Cormorant Garamond', serif;" for="browser">From:</label>
+     <input style="font-family: 'Cormorant Garamond', serif;"  class = "w3-input" type="date" id="from-date">
 
-<label for="browser">City:</label>
-<input list="city" id="myCity" onchange="getRoomtypeList()">
-<datalist id="city">
-</datalist>
+    <label  style="font-family: 'Cormorant Garamond', serif;" for="browser">To:</label>
+    <input style="font-family: 'Cormorant Garamond', serif;" class = "w3-input" type="date" id="to-date">
 
-<label for="browser">Room Type:</label>
-<input list="roomtype" id="myRoomtype">
-<datalist id="roomtype">
-</datalist>
-
-<label for="browser">Capacity:</label>
-<input type="number" list="capacity" id="myCapacity">
-<datalist id="capacity">
-</datalist>
-
-<label for="browser">Season:</label>
-<input list="season" id="mySeason">
-<datalist id="season">
-</datalist>
-</form>
-<br> <br>
-
+    <input style="font-family: 'Cormorant Garamond', serif;" class = "w3-input" type="submit" value="Search" id="search" onclick="availableRooms()">
+    </form>
+    </div>
+<br>
+<br>
+<label style="font-family: 'Cormorant Garamond', serif;" for="browser">Available rooms:</label>
+<br>
 <table style="width:70%" id="my-list"></table>
 
 <script>
@@ -76,7 +106,6 @@ function availableRooms() {
 	var capacity = document.getElementById("myCapacity").value;
 	var from = document.getElementById("from-date").value;
 	var to = document.getElementById("to-date").value;
-	var season = document.getElementById("mySeason").value;
 	
 	if (country != "") {
 		myUrl = myUrl+"country="+country+"&";
@@ -95,9 +124,6 @@ function availableRooms() {
 	if (to != "")
 		myUrl = myUrl+"to="+to+"&";
 	}
-	if (season != ""){
-		myUrl = myUrl+"season="+season+"&";
-	}
 
 	$.ajax({
         url : myUrl,
@@ -108,44 +134,18 @@ function availableRooms() {
         		$("#my-list").append("Sorry, No available rooms found. Try to search for other criterias.");
         	
         	} else {
-    			$("#my-list").append("<label for=\"browser\">Available rooms:</label><br>");
-            	$("#my-list").append("<tr><th>Country</th><th>City</th><th>Room Type</th><th>Capacity</th><th>Season</th><th>Price per day</th></tr>");
-        	var size = 0, count = 0;
-            	r.forEach(function (e) {
-            		size = size + 1;
-        		var seasontemp;
-        		e.roomType.hotel.seasons.forEach(function(s) {
-        			if (s.startDate <= from && to <= s.endDate) {
-        				seasontemp = s;
-        			} else if (s.startDate <= from) {
-        				seasontemp = s;
-        			}
-        		});
-        		if (season != "" && season != seasontemp.seasonName) {
-        			count = count+1;
-        		} else {
+        	$("#my-list").append("<tr><th>Country</th><th>City</th><th>Room Type</th><th>Capacity</th><th>Price</th></tr>");
 
-        		 $("#my-list").append("<tr><td>"+e.roomType.hotel.country+"</td><td>"+e.roomType.hotel.city+
-        				"</td><td>"+e.room_id.room_type_id.room_type_name+"</td><td>"+e.roomType.capacity+
-        				"</td><td>"+seasontemp.seasonName+"</td><td>"+e.roomType.price*seasontemp.rate+"</td><td><a href=\"bookingform\?room_number="+
-        						e.room_id.room_number+"&room_type="+e.room_id.room_type_id.room_type_name+
-        						"&hotel_id="+e.room_id.room_type_id.hotel_id+"&from-date="+
-        						document.getElementById("from-date").value + "&to-date=" + 
-        						document.getElementById("to-date").value+"&bill="+e.roomType.price*seasontemp.rate+
-        						"&capacity"+e.roomType.capacity+"&roomid"+e.room_id+"\"><button type=\"button\">"+
-        				"Book"+"</button></a></td></tr>");  
-        		//a href=\"search\bookingform\?room_number="+e.room_id.room_number+"&room_type="+e.room_id.room_type_id.room_type_name+"&hotel_id="+e.room_id.room_type_id.hotel_id>
-        	 /* 	$("#my-list").append("<tr><td>"+e.roomType.hotel.country+"</td><td>"+e.roomType.hotel.city+
-        				"</td><td>"+e.room_id.room_type_id.room_type_name+"</td><td>"+e.roomType.capacity+"</td><td>"+e.roomType.price+"</td><td><a href=\"bookingform/"+e.room_id.room_type_id.hotel_id+"/"+e.room_id.room_number+"/"+e.room_id.room_type_id.room_type_name+"/"+document.getElementById("from-date").value + "/" + document.getElementById("to-date").value+"\"><button type=\"button\">"+
-        				"Book"+"</button></a></td></tr>");     */    
-        				
-        	/* 	$("#my-list").append("<tr><td>"+e.roomType.hotel.country+"</td><td>"+e.roomType.hotel.city+
-        				"</td><td>"+e.room_id.room_type_id.room_type_name+"</td><td>"+e.roomType.capacity+"</td><td>"+e.roomType.price+"</td><td><a href=\"search/bookingform\"><button type=\"button\">"+
+        	r.forEach(function (e) {
+        		$("#my-list").append("<tr><td>"+e.roomType.hotel.country+"</td><td>"+e.roomType.hotel.city+
+        				"</td><td>"+e.room_id.room_type_id.room_type_name+"</td><td>"+e.roomType.capacity+"</td><td>"+e.roomType.price+"</td><td><a href=\"search\\bookingform\"><button type=\"button\">"+
         				"Book"+"</button></a></td></tr>"); 
-        	 */}
+/*         		$("#my-list").append("<tr><td>"+e.hotel.country+"</td><td>"+e.hotel.city+
+        				"</td><td>"+e.roomNumber+"</td><td>"+e.capacity+"</td><td><a href=\"search\\hotel\\"+e.hotel.id+"\"><button type=\"button\">"+
+        				"Book"+"</button></a></td></tr>");  <--with id */
+        	
           }); 
-            	
-            	$("#my-list").append("Sorry, Available rooms does not match chosen season.");
+
         }}
     });
 
@@ -210,21 +210,12 @@ function getRoomtypeList() {
     });
 }
 
-function getSeasonList() {
-    $.ajax({
-        url : 'search/season',
-        dataType : 'json',
-        success : function(r) {
-            updateList(r, "#season");
-        }
-    });
-}
 
 $(document).ready(function () {
 	getCountryList();
 	getCityList();
 	getRoomtypeList();
-	getSeasonList();
+	availableRooms();
 
 
 });
