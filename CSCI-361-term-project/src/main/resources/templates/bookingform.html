@@ -38,10 +38,10 @@
 </div> -->
 
 
-				<!--  <div sec:authorize="isAnonymous()">    -->
+ 
 				<tr>
 					<td>GuestId:</td>
-					<td><input type="text" th:field="*{guest.guestId}" /></td>
+    				<td><input type="text" th:field="*{guest.guestId}"></td>
 				</tr>
 
 				<tr>
@@ -54,7 +54,7 @@
 				</tr>
 				<tr>
 					<td>Guest Email:</td>
-					<td><input type="text" th:field="*{guest.email}" /></td>
+					<td><input type="text" th:field="*{guest.email}"  /></td>
 				</tr>
 				<tr>
 					<td>Identification type:</td>
@@ -72,11 +72,12 @@
 					<td>Mobile number:</td>
 					<td><input type="text" th:field="*{guest.mobile_number}" /></td>
 				</tr>
+			
 				<tr>
 					<td>Address:</td>
 					<td><input type="text" th:field="*{guest.address}" /></td>
 				</tr>
-				<tr>
+				<tr style="display:none;">
 					<td>Booking ID:</td>
 					<td><input type="text" th:field="*{bookingId}"
 						th:readonly="${param.action != 'edit'}" /></td>
