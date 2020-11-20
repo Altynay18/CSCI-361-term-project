@@ -49,14 +49,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="ISO-8859-1">
-    <title>Edit Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+
+    <title style="font-family:'Cormorant Garamond', serif;">Edit Booking</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
 
+    <style>
+        input {
+            padding-right: 25%;
+            padding-left:  25%;
+        }
+
+        form{
+            margin-right: 500px;
+            margin-left: 500px;
+        }
+    </style>
 </head>
 <body>
 
@@ -64,22 +80,57 @@
 
 <br>
 <br>
-<br>
-<br>
+
 
 <div align="center">
-        <h1>Edit Product</h1>
+        <h1 style="font-family:'Cormorant Garamond', serif;">Edit Booking</h1>
         <br />
-        <form action="@{/bookingsearch}" th:action="@{/bookingsearch/save}" th:object="${booking}"
+        <form action="@{/bookingsearch}" th:action="@{/bookingsearch/save}" th:object="${booking} "
             method="post">
- 
-            <table border="0" cellpadding="10">
-                <tr>             
-                    <td>GuestId:</td>
-                    <td>
-                        <input type="text" th:field="*{guest.guestId}" readonly />
-                    </td>
-                </tr>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Guest id:</label><br>
+            <input  class = "w3-input w3-border" type="text" th:field="*{guest.guestId}"  ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Guest Name:</label><br>
+            <input  class = "w3-input w3-border" type="text" th:field="*{guest.name}"  ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Guest Surname:</label><br>
+            <input  class = "w3-input w3-border" type="text" th:field="*{guest.name}"  ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Guest Email:</label><br>
+            <input  class = "w3-input w3-border" type="text" th:field="*{guest.email}"  ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Booking ID:</label><br>
+            <input  class = "w3-input w3-border" type="text" th:field="*{bookingId}"  ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Booking Date:</label><br>
+            <input style="font-family:'Cormorant Garamond', serif;"  class = "w3-input w3-border" type="date" th:field="*{bookingDate}"  ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">From Date:</label><br>
+            <input style="font-family:'Cormorant Garamond', serif;"  class = "w3-input w3-border" type="date" th:field="*{fromDate}"   ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">To Date:</label><br>
+            <input style="font-family:'Cormorant Garamond', serif;"  class = "w3-input w3-border" type="date" th:field="*{toDate}" align="center"   ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Room Type Name:</label><br>
+            <input style="font-family:'Cormorant Garamond', serif;"  class = "w3-input w3-border" type="text" th:field="*{roomType.room_type_id.room_type_name}" ><br>
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Room Number:</label><br>
+            <input style="font-family:'Cormorant Garamond', serif;"  class = "w3-input w3-border" type="text" th:field="*{roomNumber}"  ><br>
+
+
+            <label style="font-family:'Cormorant Garamond', serif;" for="browser">Bill:</label><br>
+            <input style="font-family:'Cormorant Garamond', serif;"  class = "w3-input w3-border" type="text" th:field="*{bill}"  ><br>
+
+    <br>
+            <button type="submit">Save</button>
+            <!-- <table border="0" cellpadding="10">
+                 <tr>
+                     <td>GuestId:</td>
+                     <td>
+                         <input type="text" th:field="*{guest.guestId}" readonly />
+                     </td>
+                 </tr>
                 
            <tr>
                     <td>Guest Name:</td>
@@ -135,7 +186,7 @@
                 <tr>
                     <td colspan="2" ><button type="submit">Save</button> </td>
                 </tr>
-            </table>
+            </table> -->
         </form>
     </div>
 </body>
