@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.demo.data.RoomType.RoomTypeId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @SuppressWarnings("serial")

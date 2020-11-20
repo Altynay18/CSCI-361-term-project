@@ -119,6 +119,8 @@ function availableRooms() {
         				seasontemp = s;
         			} else if (s.startDate <= from) {
         				seasontemp = s;
+        			} else {
+        				seasontemp={"seasonName": "no season", "rate" : 1};
         			}
         		});
         		if (season != "" && season != seasontemp.seasonName) {
@@ -144,8 +146,9 @@ function availableRooms() {
         				"Book"+"</button></a></td></tr>"); 
         	 */}
           }); 
-            	
-            	$("#my-list").append("Sorry, Available rooms does not match chosen season.");
+            	if (count == size) {
+            		$("#my-list").append("Sorry, Available rooms does not match chosen season.");
+            	}
         }}
     });
 

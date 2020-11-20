@@ -37,10 +37,6 @@ public class SeasonController {
 	@Autowired
 	private HotelRepository hotelRepository;
 
-
-	
-
-
 	@GetMapping("/all")
 	public @ResponseBody Iterable<Season> getAllSeasons() {
 		// This returns a JSON or XML with the users

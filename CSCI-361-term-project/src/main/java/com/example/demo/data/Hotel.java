@@ -1,6 +1,7 @@
 package com.example.demo.data;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,6 +44,12 @@ public class Hotel {
   @JsonManagedReference
   @ManyToMany(mappedBy = "hotels", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   private Set<Season> seasons;
+  
+  @JsonBackReference
+	@OneToMany(mappedBy="hotel")
+	private Set<Features> hotelFeatures;
+  
+  
   public void addSeasons(Season season) {
       seasons.add(season);
       season.getHotels().add(this);
@@ -55,7 +62,14 @@ public class Hotel {
   public void setSeasons(Set<Season> s) {
       seasons = s;
   }
-  
+  public Set<Features> getHotelFeatures() {
+	  return hotelFeatures;
+	}
+
+	public void setHotelFeatures(Set<Features> hotelFeatures) {
+	  this.hotelFeatures = hotelFeatures;
+	}
+
   public int getId() {
     return hotel_id;
   }

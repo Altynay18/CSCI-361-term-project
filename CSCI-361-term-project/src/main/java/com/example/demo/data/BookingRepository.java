@@ -38,6 +38,7 @@ public interface BookingRepository extends CrudRepository<Booking, Integer>{
 	@Query("select b from Booking b")
 	Iterable<Booking> findBookings();
 	
-	
+	@Query("select b from Booking b where (b.guest.guest_id=?1 or ?1=null)")
+	Iterable<Booking> findByGuestId(Integer gid);
 	
 }
