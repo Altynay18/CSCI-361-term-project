@@ -2,10 +2,16 @@ package com.example.demo.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.annotations.common.util.impl.Log;
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.data.Booking;
+import com.example.demo.data.Guest;
+import com.example.demo.data.GuestRepository;
 import com.example.demo.data.Hotel;
 import com.example.demo.data.HotelRepository;
 import com.example.demo.data.Season;
 import com.example.demo.data.SeasonRepository;
+import com.example.demo.service.EmailService;
 
 import antlr.collections.List;
 
@@ -36,6 +45,16 @@ public class SeasonController {
 	
 	@Autowired
 	private HotelRepository hotelRepository;
+	
+	@Autowired
+	private GuestRepository guestRepository;
+	
+	@Autowired
+    private EmailService emailService;
+
+
+	
+
 
 	@GetMapping("/all")
 	public @ResponseBody Iterable<Season> getAllSeasons() {
@@ -52,8 +71,7 @@ public class SeasonController {
 			bid = name;
 		}
 		Integer gid = null;
-
-		if (hotelid != null) {
+		if (name != null) {
 			gid = Integer.parseInt(hotelid);
 		}
 		return hotelRepository.findSpecificHotel(bid, gid);
@@ -80,9 +98,15 @@ public class SeasonController {
 		}
 			seasonRepository.deleteById(seasonName);
 
+			
 
-		 return new RedirectView("/seasonsearch/list");
+			return new RedirectView("/seasonsearch/list");
+				
+		 
+
 	}
+	
+
 	
 	@RequestMapping("/new")
 	public String showNewSeasonPage(Model model) {
@@ -90,6 +114,28 @@ public class SeasonController {
 	    Iterable<Hotel> listHotels = hotelRepository.findAll();
 	    model.addAttribute("listHotels", listHotels);
 	    return "newseason";
+	}
+	
+	@RequestMapping("/emailsend/{seasonName}")
+	public RedirectView sendEmail(@PathVariable("seasonName") String seasonName) {
+		Season season = seasonRepository.findById(seasonName).get();
+		SimpleMailMessage msg = new SimpleMailMessage();
+        Iterable<Guest> guests = guestRepository.findAll();
+
+        msg.setSubject(season.getSeasonName() + " season has new hotels now");
+        msg.setText("There were updates in our season " + season.getSeasonName()+ "! \n"
+        		+ "Season is continued from " + season.getStartDate() + " till " + season.getEndDate() + "\n" 
+        		+ " It's rate is very facinating, it's only " + season.getRate() + "!\n"
+        		+ " This season is available in hotels below " + season.getHotels().toString()
+        		+ " Visit the Website and learn new prices\n");
+
+        for(Guest guest: guests) {
+            msg.setTo(guest.getEmail());
+            emailService.sendEmail(msg);
+          }
+        
+
+	 return new RedirectView("/seasonsearch/list");
 	}
 	
 	@RequestMapping("/save")
@@ -105,14 +151,10 @@ public class SeasonController {
 			seas.addHotel(hotel);
 			
 		}
-		
 
-		
 		if (seas.getHotels() != null) {
 			seas.getHotels().forEach(hotel-> {hotel.getSeasons().add(season);});
 		}
-		
-		seasonRepository.save(seas);
 	
 		 return new RedirectView("/seasonsearch/list");
 	}
@@ -124,53 +166,29 @@ public class SeasonController {
 		
 		Hotel hotel1 = hotelRepository.findById(hotelid).get();
 		
-//		if (seas.getHotels() != null) {
-//			seas.getHotels().forEach(hotel-> {hotel.addSeasons(seas);});
-			seas.addHotel(hotel1);
-//			System.out.printf(seas.getHotels()+"\n");
-//		} else {
-//			seas.addHotel(hotel1);
-////			System.out.printf(seas.getHotels()+"");
-//		}
-//		if(hotel1.getSeasons() != null) {
-			hotel1.addSeasons(seas);
-//		hotel1.getSeasons().forEach(season -> {season.addHotel(hotel1);});
-//		System.out.printf(hotel1.getSeasons()+"\n");
-//		} else {
-//			hotel1.addSeasons(seas);
-////			System.out.printf(hotel1.getSeasons()+"");
-//		}
-//		System.out.printf(seas.getSeasonName()+"\n");
-//		seas.setSeasonName(seas.getSeasonName());
+		for  ( Season season : hotel1.getSeasons()) {
+			if (season.getEndDate().compareTo(seas.getStartDate())>0 && season.getStartDate().compareTo(seas.getEndDate()) <0) {
+				
+			}
+		}
+		
+		seas.addHotel(hotel1);
+		
 		seasonRepository.save(seas);
 		hotelRepository.save(hotel1);
 		
-		
-
-	
-
-//
-//		seasonRepository.save(seas);
-		return new RedirectView("/seasonsearch/list");
+		return new RedirectView("/seasonsearch/addhotels/" + seasonName);
 	}
 	
 	@RequestMapping("/addhotels/{seasonName}")
 	public String addHotels(@PathVariable("seasonName") String seasonName, @ModelAttribute("season") Season season, Model model) { 
-		model.addAttribute("season", seasonRepository.findById(seasonName).get());
-	    Iterable<Hotel> listHotels = hotelRepository.findAll();
-	    model.addAttribute("listHotels", listHotels);
 		
-//		Season seas = seasonRepository.findById(seasonName).get();
-//		for (Hotel hotel : hotels) {
-//		
-//			seas.addHotel(hotel);
-//			
-//		}
-//		seasonRepository.save(seas);
-//		if (seas.getHotels() != null) {
-//			seas.getHotels().forEach(hotel-> {hotel.getSeasons().add(seas);});
-//		}
-	
+		model.addAttribute("season", seasonRepository.findById(seasonName).get());
+		
+		Season season1 = seasonRepository.findById(seasonName).get();
+		
+	    model.addAttribute("listHotels",  season1.getHotels());
+	    
 		return "newhotels";
 	}
 	

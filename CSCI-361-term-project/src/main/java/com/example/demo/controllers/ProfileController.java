@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.data.Booking;
 import com.example.demo.data.BookingRepository;
+import com.example.demo.data.Employee;
 import com.example.demo.data.Guest;
 import com.example.demo.data.GuestRepository;
 
@@ -35,6 +37,7 @@ public class ProfileController {
     	String email = principal.getName();
     	return guestRepository.findByEmail(email);
     }
+   
     
     @PostMapping("{gid}/remove/{bid}")
     public String bookingDelete(@PathVariable(value="gid") int gid, 

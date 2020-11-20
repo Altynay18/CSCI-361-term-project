@@ -15,8 +15,6 @@ table {
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
 <h2>Search Hotels for Season</h2>
 <p>Use the input field to search for a specific season.</p>
-
-
  <table>
         <thead>
             <tr>
@@ -24,7 +22,6 @@ table {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Rate</th>
- 
             </tr>
         </thead>
         <tbody>
@@ -33,29 +30,7 @@ table {
                 <td th:text="*{startDate}">Start Date</td>
                 <td th:text="*{endDate}">End Date</td>
                 <td th:text="*{rate}">Rate</td>
-<!--                  <th:block th:each="{hotel : ${listHotels}" >
-                <td  th:text="*{hotel}">Hotel Name</td></th:block> -->
-<!--                 <td>
-                    <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
-                </td> 
-                <td>
-                    <a th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
-                </td> -->   
             </tr>
-
- 
- 
-           
-     
-<!--                  <th:block th:each="{hotel : ${listHotels}" >
-                <td  th:text="*{hotel}">Hotel Name</td></th:block> -->
-<!--                 <td>
-                    <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
-                </td> 
-                <td>
-                    <a th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
-                </td> -->   
-      
         </tbody>
     </table>
     <table>
@@ -78,19 +53,7 @@ table {
               <td th:text="*{hotel.country}">Hotel Country</td>
            </tr>
            </tbody>
-    </table>
-
-<!--             <div>
-              <select class="form-control" th:object= "${season}"th:action="@{/seasonsearch/save}" name="example" id="example" multiple="multiple"  method="post">
-     <option value="0">ALL</option>
-     <option th:each="hotel : ${listHotels}"
-             th:value="${hotel.id}"
-             th:field="${listHotels}"
-             th:text="${hotel.hotelName}">
-     </option>
-</select> 
-             </div>  -->
-             
+    </table>    
 <br>
 
 <label for="browser">Hotel Name:</label>
@@ -131,7 +94,7 @@ function hotelList() {
         success : function(r) {
         	$("#my-list").html("");
         	if(!$.trim(r)){
-        		$("#my-list").append("Sorry, No booking found. Try to search for other criterias.");
+        		$("#my-list").append("Sorry, No hotel found. Try to search for other criterias.");
         	
         	} else {
         	r.forEach(function (e) {
@@ -139,30 +102,27 @@ function hotelList() {
         				+"&nbsp;&nbsp;&nbsp;&nbsp; Hotel Id: "+ e.id
         				+"&nbsp;&nbsp;&nbsp;&nbsp; Hotel Country: " + e.country
         				+"&nbsp;&nbsp;&nbsp;&nbsp; Hotel City: " + e.city
-        			/* 	+"<a href=\"/bookingsearch/edit/"+e.bookingId +"\"><button type=\"button\">Change" */
-        			/* 	+"</button></a>" */
         				+"&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"http://localhost:8080/seasonsearch/savehotel/" +e.id+ "/"+ seasName + "\"><button type=\"button\">Add"
         				+"</button></a></summary>"
-        				
-     /*    				<p>Booking Date: " + e.bookingDate +"<br> From: "
-        				+ e.fromDate + ". To: " + e.toDate + "<br> Room Type: "
-        				+ e.room.room_id.room_type_id.room_type_name + ". Room Number: "
-        				+ e.room.room_id.room_number + "<br> Bill: "+e.bill + "<br> Guest name: "+ e.guest.name
-        				+ " " + e.guest.surname + "<br> Guest e-mail: " + e.guest.email
-        				+"</p>"  */
         				+ ""); 
         	
-          }); 
+          });
+        	
 
         }}
     });
 
 }
 
+function sendEmail() {
+	  window.location.replace("http://localhost:8080/seasonsearch/emailsend/" + seasName);
+	}
+
 $(document).ready(function () {
 	hotelList();
 });
 </script>
-<!--  <a class="btn btn-outline-primary" th:href="@{search}"><button type= "button">Save all changes</button></a> -->
+ <a class="btn btn-outline-primary" ><button onclick="sendEmail()" type= "button">Save all changes</button></a> 
+ <!-- th:href="@{/seasonsearch/emailsend}" -->
 </body>
 </html> 

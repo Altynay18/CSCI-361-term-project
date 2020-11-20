@@ -38,8 +38,6 @@ table {
                 <td th:text="${season.startDate}">Start Date</td>
                 <td th:text="${season.endDate}">End Date</td>
                 <td th:text="${season.rate}">Rate</td>
-      <!--          <th:block th:each="hotel : ${season.hotels}" >
-                <td  th:text="${hotel.hotelName}">Hotel Name</td></th:block> -->
                 <td>
                     <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
                 </td> 
@@ -52,16 +50,6 @@ table {
 </div>   
 
 
-<!-- <label for="browser">Season:</label>
-<input list="country" id="mySeason" onchange="getSeasonList()">
-<datalist id="season_name">
-</datalist> -->
-<!-- 
-<label for="browser">Hotel:</label>
-<input list="city" id="myCity" onchange="getRoomtypeList()">
-<datalist id="city">
-</datalist> -->
-
 <br>
 <table style="width:70%" id="my-list"></table>
 
@@ -72,8 +60,6 @@ $(document).ready(function () {
 
 });
 </script>
-
-<!-- <table style="width:100%" id="my-list"></table> -->
 
 </body>
 </html>

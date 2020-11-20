@@ -13,4 +13,6 @@ public interface GuestRepository extends CrudRepository<Guest, String>{
 	@Query("select g from Guest g where g.email=?1")
 	Optional<Guest> findByEmail(String email);
 
+	@Query("select g from Employee g where g.email=?1")
+	Optional<Employee> findEByEmail(String email);
 }

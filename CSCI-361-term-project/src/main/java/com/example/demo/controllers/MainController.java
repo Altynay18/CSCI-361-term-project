@@ -5,14 +5,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.data.GuestRepository;
 import com.example.demo.data.Hotel;
 import com.example.demo.data.HotelRepository;
+
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
 public class MainController {
     @Autowired
     private HotelRepository hotelRepository;
+    
+    @Autowired
+	private GuestRepository guestRepository;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -66,8 +73,10 @@ public class MainController {
 
 
     @RequestMapping(path="/profile")
-    public String profile(Model model) {
+    public String profile(Model model, Principal principal) {
         model.addAttribute("title", "Profile");
+        String email = principal.getName();
+		model.addAttribute("guest", guestRepository.findByEmail(email).get());
         return "profile";
     }
 
