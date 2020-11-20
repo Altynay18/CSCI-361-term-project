@@ -1,73 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
-
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 table {
   border: 1px solid black;
 }
-input[type=text], select {
- width: 100%;
- padding: 12px 20px;
- margin: 8px 0;
- display: inline-block;
- border: 1px solid #ccc;
- border-radius: 4px;
- box-sizing: border-box;
-}
-
-input[type=submit] {
- width: 100%;
- background-color: #4CAF50;
- color: white;
- padding: 14px 20px;
- margin: 8px 0;
- border: none;
- border-radius: 4px;
- cursor: pointer;
-}
-
-input[type=submit]:hover {
- background-color: #45a049;
-}
-
-div {
- border-radius: 5px;
- background-color: #f2f2f2;
- padding: 20px;
-}
 </style>
 </head>
 
-<body style="background-color: white">
+<body>
 <a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
-<div style="background-color: white">
-
-<h2 align="center">Search Bookings</h2>
-<p align="center">Use the input field to search for a specific booking.</p>
-<form style="margin-top: 100px; margin-left: 500px; margin-right: 500px; background-color: white">
+<h2>Search Bookings</h2>
+<p>Use the input field to search for a specific booking.</p>
+<form onsubmit="return false">
 <label for="browser">Booking Id:</label>
-<input type="text" id="bookingId">
+<input type="number" id="bookingId">
 
 <label for="browser">Guest Id:</label>
-<input type="text" id="guestId">
+<input type="number" id="guestId">
 
 <label for="browser">Guest Email:</label>
 <input type="text" id="guestEmail">
 
 <input type="submit" value="Search" id="search" onclick="bookingList()">
+<input type="reset">
 </form>
- </div>
-<div style="background-color: white">
-<label for="browser"><h2 style="font-family:'Cormorant Garamond', serif; margin-left: 50px" >Existing bookings:</h2></label>
+<br> <br>
+<label for="browser">Existing bookings:</label>
 <br>
-<div id="my-list" style="background-color: white"></div>
+<br>
+<div id="my-list"></div>
 <br>
 <!-- <table style="width:100%" id="my-list"></table> -->
-</div>
+
 <script>
 
 function bookingList() {
@@ -100,7 +67,8 @@ function bookingList() {
         		$("#my-list").append("<details><summary>Booking Id: "+e.bookingId
         				+"&nbsp;&nbsp;&nbsp;&nbsp; Guest Id: "+e.guest.guestId+"&nbsp;&nbsp;&nbsp;&nbsp;"
         				+"<a href=\"/bookingsearch/edit/"+e.bookingId +"\"><button type=\"button\">Change"
-        				+"</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"/bookingsearch/delete/" +e.bookingId +"\"><button type=\"button\">Cancel"
+        				+"</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"/bookingsearch/delete/" +e.bookingId 
+        				+"\"><button type=\"button\">Cancel"
         				+"</button></a></summary><p>Booking Date: " + e.bookingDate +"<br> From: "
         				+ e.fromDate + ". To: " + e.toDate + "<br> Room Type: "
         				+ e.room.room_id.room_type_id.room_type_name + ". Room Number: "
