@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -42,108 +43,95 @@ import com.example.demo.data.RoomTypeRepository;
 
 public class BookingFormControllers {
 	@Autowired
-	 GuestRepository guestRepository;
-	 @Autowired
-	 RoomTypeRepository roomTyperepository;
-	 @Autowired
-	 RoomRepository roomrepository;
-	 @Autowired
-	 BookingRepository bookingRepository;
-	 @Autowired
-	 CategoryRepository categoryRepository;
-	 @Autowired
-	 RoleRepository roleRepository;
+	GuestRepository guestRepository;
+	@Autowired
+	RoomTypeRepository roomTyperepository;
+	@Autowired
+	RoomRepository roomrepository;
+	@Autowired
+	BookingRepository bookingRepository;
+	@Autowired
+	CategoryRepository categoryRepository;
+	@Autowired
+	RoleRepository roleRepository;
 	@RequestMapping(path="/bookingform")
-	    public String bookingform(
-	    		//@PathVariable(value = "city", required=false) String city,
-	    	    // @PathVariable(value = "country", required = false) String country,
-//	    		  @RequestParam(value = "id", required = true) int id,
-//	    		  @PathVariable(value = "roomtype", required = false) String roomType,
-	    		 // @PathVariable(value = "capacity", required = false) String capacity,
-//	    		@RequestParam(value = "from", required=false) Date from,
-//	    		@RequestParam(value = "to", required = false) Date to,
-//	    		@RequestParam(value = "hotelid", required = false)Integer hotelid,
-//	    		@RequestParam(value = "roomid", required = false) Integer roomid,
-//	    		@RequestParam(value = "roomtypeid", required = false) String roomtypeid,
-	    		@RequestParam(value = "from-date", required=false) Date from,
-	    		@RequestParam(value = "to-date", required = false) Date to,
-	    		@RequestParam(value = "hotel_id", required = false)Integer hotelid,
-	    		@RequestParam(value = "room_number", required = false) Integer roomnumber,
-	    		@RequestParam(value = "room_type", required = false) String roomtypename,
-	    		@RequestParam(value = "bill", required = false) Integer bill,
-	    		@RequestParam(value = "capacity", required = false) Integer capacity,
-	    		@RequestParam(value = "roomid", required = false) RoomId roomid,
+	public String bookingform(
+			@RequestParam(value = "from-date", required=false) Date from,
+			@RequestParam(value = "to-date", required = false) Date to,
+			@RequestParam(value = "hotel_id", required = false)Integer hotelid,
+			@RequestParam(value = "room_number", required = false) Integer roomnumber,
+			@RequestParam(value = "room_type", required = false) String roomtypename,
+			@RequestParam(value = "bill", required = false) Integer bill,
+			@RequestParam(value = "capacity", required = false) Integer capacity,
+			@RequestParam(value = "roomid", required = false) RoomId roomid,
+			Model model
 
-	    		  Model model
-	    	
-	    		  ) {
-	    	
-	    	
-	    	Booking book = new Booking();
+			) {
 
-	    	long millis=System.currentTimeMillis();  
-	    	java.sql.Date date=new java.sql.Date(millis); 
-	    	book.setBookingDate(date);
-	    	book.setFromDate(from);
-	    	book.setToDate(to);
-	  		Period period = Period.between(from.toLocalDate(),to.toLocalDate());
-	  		bill = bill*period.getDays();
-	    	book.setBill(bill);
-	    	RoomId guestroom = new RoomId();
-	    	guestroom.setRoom_number(roomnumber);
-	    	RoomTypeId roomtypeid = new RoomTypeId();
-	    	roomtypeid.setHotel_id(hotelid);
-	    	roomtypeid.setRoom_type_name(roomtypename);
-	    	guestroom.setRoom_type_id(roomtypeid);
-	    	book.setRoom(roomrepository.findById(guestroom).get());
-	    	model.addAttribute("booking", book);
-	    	return "bookingform";
-	    	}
+		Booking book = new Booking();
+		org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth.isAuthenticated()) {
+			org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			Guest user = guestRepository.findByEmail(currentPrincipalName).get();
+			book.setGuest(user);
+		}
 
-//@WebService()
-//    @WebMethod()
-//    @RolesAllowed("basicUser")
-	@RequestMapping("bookingform/success")
+		long millis=System.currentTimeMillis();  
+		java.sql.Date date=new java.sql.Date(millis); 
+		book.setBookingDate(date);
+		book.setFromDate(from);
+		book.setToDate(to);
+		Period period = Period.between(from.toLocalDate(),to.toLocalDate());
+		bill = bill*period.getDays();
+		book.setBill(bill);
+		RoomId guestroom = new RoomId();
+		guestroom.setRoom_number(roomnumber);
+		RoomTypeId roomtypeid = new RoomTypeId();
+		roomtypeid.setHotel_id(hotelid);
+		roomtypeid.setRoom_type_name(roomtypename);
+		guestroom.setRoom_type_id(roomtypeid);
+		book.setRoom(roomrepository.findById(guestroom).get());
+		model.addAttribute("booking", book);
+		return "bookingform";
+	}
+
+
+	@RequestMapping(path ="bookingform/success")
 	public String redirectWithUsingRedirectView(@ModelAttribute("booking") Booking booking) {
 
-				Booking book = new Booking();
-				book.setBookingDate(booking.getBookingDate());
-				book.setBill(booking.getBill());
-				book.setBookingId(booking.getBookingId());
-				book.setFromDate(booking.getFromDate());
-				book.setToDate(booking.getToDate());
-	//			org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//				if(!auth.isAuthenticated()) {
-//				String guestmail = booking.getGuest().getEmail();
-////				Guest user = guestRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()).get();
-////	    	org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-////	    	String currentPrincipalName = authentication.getName();
-////	    	Guest user = guestRepository.findByEmail("").get();
-////	    	book.setGuest(user);
-//				
-				String guestmail = booking.getGuest().getEmail();
-				if(guestRepository.findByEmail(guestmail).isEmpty()) {
-					com.example.demo.data.Category basic = categoryRepository.findByCategory("basic");
-			  		booking.getGuest().setCategory(basic);
-			  		booking.getGuest().setRole(roleRepository.findByRoleName("guest"));
-			  		guestRepository.save(booking.getGuest());
-				}else {
-					booking.setGuest(guestRepository.findByEmail(guestmail).get());
-				}
-//				}else {
-//					
-//					booking.setGuest(guestRepository.findByEmail(auth.getName()).get());
-//				}
-				
-		  		Period period = Period.between(booking.getFromDate().toLocalDate(),booking.getToDate().toLocalDate());
-		  		booking.setPeriod(period.getDays());
-		  		book.setGuest(booking.getGuest());
-		  		book.setPeriod(8);
-		  		book.setRoom(booking.getRoom());
-
-				bookingRepository.save(book);		
-		  
-				return "redirect:/ ";
+		Booking book = new Booking();
+		book.setBookingDate(booking.getBookingDate());
+		book.setBill(booking.getBill());
+		book.setBookingId(booking.getBookingId());
+		book.setFromDate(booking.getFromDate());
+		book.setToDate(booking.getToDate());
+	
+		org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth.isAuthenticated()) {
+			book.setGuest(booking.getGuest());
+		}else {
+		String guestmail = booking.getGuest().getEmail();
+		if(guestRepository.findByEmail(guestmail).isEmpty()) {
+			com.example.demo.data.Category basic = categoryRepository.findByCategory("basic");
+			booking.getGuest().setCategory(basic);
+			booking.getGuest().setRole(roleRepository.findByRoleName("guest"));
+			guestRepository.save(booking.getGuest());
+		}else {
+			booking.setGuest(guestRepository.findByEmail(guestmail).get());
 		}
+		}
+
+
+		Period period = Period.between(booking.getFromDate().toLocalDate(),booking.getToDate().toLocalDate());
+		booking.setPeriod(period.getDays());
+		book.setGuest(booking.getGuest());
+		book.setPeriod(8);
+		book.setRoom(booking.getRoom());
+
+		bookingRepository.save(book);		
+
+		return "redirect:/ ";
+	}
 
 }
