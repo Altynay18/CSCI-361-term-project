@@ -2,6 +2,8 @@ package com.example.demo.controllers;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +62,9 @@ public class BookingSearchController {
 	
 	@RequestMapping("/delete/{id}")
 	public RedirectView deleteBooking(@PathVariable("id") Integer id) {
+		
+		Booking booking =bookingRepository.findById(id).get();
+		booking.getRoom().getBookings().remove(booking);
 		bookingRepository.deleteById(id);
 		return new RedirectView("/bookingsearch");
 	}
@@ -72,20 +77,43 @@ public class BookingSearchController {
 	     
 	    return mav;
 	}
-	
 	@RequestMapping("/save")
 	public RedirectView saveProduct(@ModelAttribute("booking") Booking booking) {
-		Booking book = bookingRepository.findById(booking.getBookingId()).get();
+		if (booking.getBookingId() != null) {
+			Booking book = bookingRepository.findById(booking.getBookingId()).get();
+			Room room =  roomRepository.findById(book.getRoom().getRoom_id()).get();
 
+				
+				book.setBookingDate(booking.getBookingDate());
+				book.setBill(booking.getBill());
+				book.setBookingId(booking.getBookingId());
+				book.setFromDate(booking.getFromDate());
+				book.setToDate(booking.getToDate());
+				book.setGuest(booking.getGuest());
+				
+				book.setPeriod(booking.getPeriod());
+				
+				
+				room.setRoom_id(room.getRoom_id());
+				room.setBookings(room.getBookings());
+				book.setRoom(room);
+				
 			
-			book.setBookingDate(booking.getBookingDate());
-			book.setBill(booking.getBill());
-			book.setBookingId(booking.getBookingId());
-			book.setFromDate(booking.getFromDate());
-			book.setToDate(booking.getToDate());
-			book.setGuest(booking.getGuest());
-			book.setRoom(booking.getRoom());
-			bookingRepository.save(book);
+				roomRepository.save(room);
+				
+				bookingRepository.save(book);
+			
+		}
+	
+			  
+				
+//			
+			
+//			book.getRoom().addBooking(book);
+			
+//			roomRepository.save(book.getRoom());
+
+//			room.addBooking(book);
 
 //		bookingRepository.save(booking);
 	    return new RedirectView("/bookingsearch");
