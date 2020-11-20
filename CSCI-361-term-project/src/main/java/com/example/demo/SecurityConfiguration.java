@@ -119,7 +119,7 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 
-            http.authorizeRequests()
+            http.antMatcher("/login").authorizeRequests()
                     // URLs matching for access rights
                     .antMatchers("/").permitAll()
                     .antMatchers("/login").permitAll()
