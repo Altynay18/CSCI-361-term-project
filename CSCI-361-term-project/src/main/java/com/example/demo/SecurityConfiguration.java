@@ -27,46 +27,53 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
         @Autowired
         private BCryptPasswordEncoder bCryptPasswordEncoder;
         @Autowired
-        private DataSource dataSource;
-        @Value("${spring.queries.users-query}")
-        private String usersQuery;
-        @Value("${spring.queries.roles-query}")
-        private String rolesQuery;
+        private CustomLoginSuccessHandler successHandler;
 
+        @Autowired
+        private DataSource dataSource;
+
+        @Value("${spring.queries.employees-query}")
+        private String employeesQuery;
+
+        @Value("${spring.queries.employeerole-query}")
+        private String rolesQuery;
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-                    .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
+            auth.jdbcAuthentication().usersByUsernameQuery(employeesQuery).authoritiesByUsernameQuery(rolesQuery)
+                    .dataSource(dataSource)/*.passwordEncoder(bCryptPasswordEncoder)*/;
         }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 
-            http.antMatcher("/login").authorizeRequests()
+            http.antMatcher("/employee").authorizeRequests()
                     // URLs matching for access rights
                     .antMatchers("/").permitAll()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/registration").permitAll()
-                    //.antMatchers("/bookingsearch").permitAll()
+                    .antMatchers("/bookingsearch").permitAll()
                     .antMatchers("/search").permitAll()
                     .antMatchers("/employee").permitAll()
                     .antMatchers("/bookingform").permitAll()
                     .antMatchers("/bookingupdate").permitAll()
                     .antMatchers("/home").permitAll()
+                    .antMatchers("/schedule").hasAnyAuthority("MANAGER")
+                    .antMatchers("/bookingsearch").hasAnyAuthority("DESKCLERK")
                     .antMatchers("/employee").permitAll()
                     .antMatchers("/schedule").permitAll()
                     .antMatchers("/scheduleupdate").permitAll()
                     .antMatchers("/successbook").permitAll()
 
-                    .antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")
+                  //  .antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")
                     .anyRequest().authenticated()
                     .and()
                     // form login
                     .csrf().disable().formLogin()
-                    .loginPage("/login")
-                    .failureUrl("/login?error=true")
-                    .defaultSuccessUrl("/mainpage")
+                    .loginPage("/employee")
+                    .failureUrl("/employee?error=true")
+                    .successHandler(successHandler)
+                   // .defaultSuccessUrl("/mainpage")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .and()
@@ -94,26 +101,25 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
             super();
         }
 
-        /*@Autowired
-        private BCryptPasswordEncoder bCryptPasswordEncoder;*/
         @Autowired
-        private DataSource dataSource;
-        @Value("${spring.queries.employees-query}")
+        private BCryptPasswordEncoder bCryptPasswordEncoder;
+       @Autowired
+       private DataSource dataSource;
+        @Value("${spring.queries.users-query}")
         private String usersQuery;
-        @Value("${spring.queries.employeerole-query}")
+        @Value("${spring.queries.roles-query}")
         private String rolesQuery;
-
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-                    .dataSource(dataSource)/*.passwordEncoder(bCryptPasswordEncoder)*/;
+                    .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
         }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 
-            http.antMatcher("/employee").authorizeRequests()
+            http.antMatcher("/login").authorizeRequests()
                     // URLs matching for access rights
                     .antMatchers("/").permitAll()
                     .antMatchers("/login").permitAll()
@@ -121,22 +127,27 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
                     //.antMatchers("/bookingsearch").permitAll()
                     .antMatchers("/search").permitAll()
                     .antMatchers("/employee").permitAll()
+
+                    .antMatchers("/mainpage").hasAnyAuthority("SITE_USER")
+
                     .antMatchers("/bookingform").permitAll()
                     .antMatchers("/bookingupdate").permitAll()
                     .antMatchers("/home").permitAll()
                     .antMatchers("/employee").permitAll()
-                    .antMatchers("/schedule").permitAll()
+                    //.antMatchers("/schedule").permitAll()
                     .antMatchers("/scheduleupdate").permitAll()
                     .antMatchers("/successbook").permitAll()
 
-                    .antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")
+                    //.antMatchers("//**").hasAnyAuthority(/*"SUPER_USER", "ADMIN_USER", */"SITE_USER")
                     .anyRequest().authenticated()
                     .and()
                     // form login
                     .csrf().disable().formLogin()
-                    .loginPage("/employee")
-                    .failureUrl("/employee?error=true")
+                    .loginPage("/login")
+                    .failureUrl("/login?error=true")
                     .defaultSuccessUrl("/mainpage")
+
+                    //  .successHandler(successHandler)
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .and()
@@ -203,8 +214,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/bookingsearch/**").permitAll()
-                .antMatchers("/search/**").permitAll()
-                .antMatchers("/bookingform/**").permitAll()
                 .antMatchers("/search/**").permitAll()*/
 
 
