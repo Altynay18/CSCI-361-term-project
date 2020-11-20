@@ -133,18 +133,9 @@ function availableRooms() {
         						e.room_id.room_number+"&room_type="+e.room_id.room_type_id.room_type_name+
         						"&hotel_id="+e.room_id.room_type_id.hotel_id+"&from-date="+
         						document.getElementById("from-date").value + "&to-date=" + 
-        						document.getElementById("to-date").value+"&bill="+e.roomType.price*seasontemp.rate+
-        						"&capacity"+e.roomType.capacity+"&roomid"+e.room_id+"\"><button type=\"button\">"+
+        						document.getElementById("to-date").value+"&bill="+e.roomType.price*seasontemp.rate+"\"><button type=\"button\">"+
         				"Book"+"</button></a></td></tr>");  
-        		//a href=\"search\bookingform\?room_number="+e.room_id.room_number+"&room_type="+e.room_id.room_type_id.room_type_name+"&hotel_id="+e.room_id.room_type_id.hotel_id>
-        	 /* 	$("#my-list").append("<tr><td>"+e.roomType.hotel.country+"</td><td>"+e.roomType.hotel.city+
-        				"</td><td>"+e.room_id.room_type_id.room_type_name+"</td><td>"+e.roomType.capacity+"</td><td>"+e.roomType.price+"</td><td><a href=\"bookingform/"+e.room_id.room_type_id.hotel_id+"/"+e.room_id.room_number+"/"+e.room_id.room_type_id.room_type_name+"/"+document.getElementById("from-date").value + "/" + document.getElementById("to-date").value+"\"><button type=\"button\">"+
-        				"Book"+"</button></a></td></tr>");     */    
-        				
-        	/* 	$("#my-list").append("<tr><td>"+e.roomType.hotel.country+"</td><td>"+e.roomType.hotel.city+
-        				"</td><td>"+e.room_id.room_type_id.room_type_name+"</td><td>"+e.roomType.capacity+"</td><td>"+e.roomType.price+"</td><td><a href=\"search/bookingform\"><button type=\"button\">"+
-        				"Book"+"</button></a></td></tr>"); 
-        	 */}
+	}
           }); 
             	if (count == size) {
             		$("#my-list").append("Sorry, Available rooms does not match chosen season.");
