@@ -115,6 +115,8 @@ public class SeasonController {
 		if (seas.getHotels() != null) {
 			seas.getHotels().forEach(hotel-> {hotel.getSeasons().add(season);});
 		}
+		
+		seasonRepository.save(seas);
 	
 		 return new RedirectView("/seasonsearch/list");
 	}

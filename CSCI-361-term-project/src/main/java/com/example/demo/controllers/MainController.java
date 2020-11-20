@@ -38,6 +38,12 @@ public class MainController {
 		model.addAttribute("title", "BookingSearch Service");
 		return "bookingsearch";
 	}
+	
+	@RequestMapping(path = "/manager")
+	public String manager(Model model) {
+		model.addAttribute("title", "Manager Service");
+		return "manager";
+	}
 
 /*
     @RequestMapping(path="/registration")
