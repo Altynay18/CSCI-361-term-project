@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.data.Booking;
+import com.example.demo.data.Employee;
+import com.example.demo.data.EmployeeRepository;
 import com.example.demo.data.Guest;
 import com.example.demo.data.GuestRepository;
 import com.example.demo.data.Hotel;
@@ -48,6 +50,8 @@ public class SeasonController {
 	
 	@Autowired
 	private GuestRepository guestRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	
 	@Autowired
     private EmailService emailService;
@@ -121,7 +125,7 @@ public class SeasonController {
 		Season season = seasonRepository.findById(seasonName).get();
 		SimpleMailMessage msg = new SimpleMailMessage();
         Iterable<Guest> guests = guestRepository.findAll();
-
+        Iterable<Employee> employee = employeeRepository.findAll();
         msg.setSubject(season.getSeasonName() + " season has new hotels now");
         msg.setText("There were updates in our season " + season.getSeasonName()+ "! \n"
         		+ "Season is continued from " + season.getStartDate() + " till " + season.getEndDate() + "\n" 
@@ -134,7 +138,10 @@ public class SeasonController {
             emailService.sendEmail(msg);
           }
         
-
+        for(Employee e : employee) {
+        	msg.setTo(e.getEmail());
+            emailService.sendEmail(msg);
+        }
 	 return new RedirectView("/seasonsearch/list");
 	}
 	
