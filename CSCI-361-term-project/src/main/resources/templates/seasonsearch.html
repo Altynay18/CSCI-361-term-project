@@ -3,6 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 table {
@@ -10,39 +21,50 @@ table {
 }
 </style>
 </head>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+    <p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
 
+    <img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 160px; height: 100px;">
+    <p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+    <a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+
+    <nav class="my-2 my-md-0 mr-md-3">
+    </nav>
+
+    <!--  <a class="btn btn-outline-primary" th:href="@{profile}">My profile</a>-->
+</div>
 <body>
 
-<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
-
-
 <div align="center">
-    <h1>Season List</h1>
-    <a href="/seasonsearch/new">Create New Season</a>
+    <br>
+    <br>
+    <h1 style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 40px">Season List</h1>
+    <a style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" href="/seasonsearch/new">Create New Season</a>
     <br/><br/>
     <table border="1" cellpadding="10">
         <thead>
             <tr>
-                <th>Season Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Rate</th>
-                <th>Hotels Info</th>
-                <th>Delete Season</th>
+                <th style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px">Season Name</th>
+                <th style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px">Start Date</th>
+                <th style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px">End Date</th>
+                <th style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px">Rate</th>
+                <th style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px">Hotels Info</th>
+                <th style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px">Delete Season</th>
  
             </tr>
         </thead>
         <tbody>
             <tr th:each="season : ${listSeasons}">
-                <td th:text="${season.seasonName}">Season Name</td>
-                <td th:text="${season.startDate}">Start Date</td>
-                <td th:text="${season.endDate}">End Date</td>
-                <td th:text="${season.rate}">Rate</td>
+                <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px" th:text="${season.seasonName}">Season Name</td>
+                <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px"  th:text="${season.startDate}">Start Date</td>
+                <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px" th:text="${season.endDate}">End Date</td>
+                <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px" th:text="${season.rate}">Rate</td>
                 <td>
-                    <a th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
+                    <a style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px" th:href="@{'addhotels/' + ${season.seasonName}}">Add hotels</a>
                 </td> 
                 <td>
-                    <a th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
+                    <a style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px" th:href="@{'delete/' + ${season.seasonName}}">Delete</a>
                 </td>   
             </tr>
         </tbody>
