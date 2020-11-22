@@ -1,11 +1,18 @@
 
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Book room</title>
-
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -14,117 +21,118 @@
 </head>
 <script type="text/javascript">
 </script>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+	<p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+	<img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 150px; height: 100px;">
+	<p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+	<a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+	<a class="btn  btn-outline-dark " th:href="@{registration}"  >Register</a>
+	<a class="btn  btn-outline-dark" th:href="@{login}">Log In</a>
+	<nav class="my-2 my-md-0 mr-md-3">
+	</nav>
+
+</div>
 <body>
-
-	<!-- create navigation bar ( header) -->
-
 	<br>
-	<br>
-	<br>
-	<br>
-
 	<div align="center">
-		<h1>Book Room</h1>
+		<h1 style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 40px">Book Room</h1>
 		<!-- 	<div sec:authorize="isAuthenticated()">
       Authenticated as <span sec:authentication="name"></span></div> -->
-
-		<br />
 
 		<form action="#" th:action="@{/bookingform/success}"
 			th:object="${booking}" method="post" modelAttribute="booking">
 			<table border="0" cellpadding="10">
-				<!--                 <div sec:authorize="hasRole('ROLE_ADMIN')">
-  This content is only shown to administrators.
-</div> -->
 
-
- 
 				<tr>
-					<td>GuestId:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >GuestId:</td>
     				<td><input type="text" th:field="*{guest.guestId}"></td>
 				</tr>
 
 				<tr>
-					<td>Guest Name:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Guest Name:</td>
 					<td><input type="text" th:field="*{guest.name}" /></td>
 				</tr>
 				<tr>
-					<td>Guest Surname:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Guest Surname:</td>
 					<td><input type="text" th:field="*{guest.surname}" /></td>
 				</tr>
 				<tr>
-					<td>Guest Email:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Guest Email:</td>
 					<td><input type="text" th:field="*{guest.email}"  /></td>
 				</tr>
 				<tr>
-					<td>Identification type:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Identification type:</td>
 					<td><input type="text" th:field="*{guest.id_type}" /></td>
 				</tr>
 				<tr>
-					<td>Identification number:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Identification number:</td>
 					<td><input type="text" th:field="*{guest.id_number}" /></td>
 				</tr>
 				<tr>
-					<td>Phone number:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Phone number:</td>
 					<td><input type="text" th:field="*{guest.phone_number}" /></td>
 				</tr>
 				<tr>
-					<td>Mobile number:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Mobile number:</td>
 					<td><input type="text" th:field="*{guest.mobile_number}" /></td>
 				</tr>
 			
 				<tr>
-					<td>Address:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Address:</td>
 					<td><input type="text" th:field="*{guest.address}" /></td>
 				</tr>
 				<tr style="display:none;">
-					<td>Booking ID:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Booking ID:</td>
 					<td><input type="text" th:field="*{bookingId}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 				<tr>
 
-					<td>Booking Date:</td>
-					<td><input type="date" th:field="*{bookingDate}"
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Booking Date:</td>
+					<td><input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="date" th:field="*{bookingDate}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 				<tr>
-					<td>From Date:</td>
-					<td><input type="date" th:field="*{fromDate}"
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">From Date:</td>
+					<td><input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="date" th:field="*{fromDate}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 
 				<tr>
-					<td>To Date:</td>
-					<td><input type="date" th:field="*{toDate}"
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">To Date:</td>
+					<td><input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="date" th:field="*{toDate}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 				<tr>
-					<td>HotelId:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">HotelId:</td>
 					<td><input type="text"
 						th:field="*{room.room_id.room_type_id.hotel_id}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 				<tr>
-					<td>Room Type Name:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Room Type Name:</td>
 					<td><input type="text"
 						th:field="*{room.room_id.room_type_id.room_type_name}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 
 				<tr>
-					<td>Room Number:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Room Number:</td>
 					<td><input type="text" th:field="*{room.room_id.room_number}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
 				<tr>
-					<td>Bill:</td>
+					<td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Bill:</td>
 					<td><input type="text" th:field="*{bill}"
 						th:readonly="${param.action != 'edit'}" /></td>
 				</tr>
+<br>
+				<br>
+				<br>
 
-
-				<td colspan="2"><button type="submit">Book</button></td>
+				<td colspan="2"><button style=" margin-left: 150px; color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="submit" >Book</button></td>
 				</tr>
 			</table>
 		</form>
