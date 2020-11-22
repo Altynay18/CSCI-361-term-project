@@ -3,6 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 table {
@@ -10,46 +20,59 @@ table {
 }
 </style>
 </head>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+    <p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
 
+    <img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 160px; height: 100px;">
+    <p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+    <a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+
+    <nav class="my-2 my-md-0 mr-md-3">
+    </nav>
+
+    <!--  <a class="btn btn-outline-primary" th:href="@{profile}">My profile</a>-->
+</div>
+<br>
+<br>
 <body>
 
-<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
-
   <div align="center">
-        <h1>Create New Season</h1>
-        <br />
+        <h1 style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 40px">Create New Season</h1>
+        <br>
+      <br>
      
         <form action="#" th:action="@{/seasonsearch/save}" th:object="${season}"
             method="post">
             
             
         
-            <table border="0" cellpadding="10">
+            <table border="1" cellpadding="10">
              <tr th:object="${object2}" >
              
              </tr>
         
                 <tr>
-                    <td>Season Name:</td>
+                    <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Season Name:</td>
                     <td><input type="text" th:field="*{seasonName}" /></td>
                 </tr>
                 <tr>
-                    <td>Start Date:</td>
-                    <td><input type="date" th:field="*{startDate}" /></td>
+                    <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Start Date:</td>
+                    <td><input  style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="date" th:field="*{startDate}" /></td>
                 </tr>
                 <tr>
-                    <td>End Date:</td>
-                    <td><input type="date" th:field="*{endDate}" /></td>
+                    <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >End Date:</td>
+                    <td><input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="date" th:field="*{endDate}" /></td>
                 </tr>
                 <tr>
-                    <td>Rate:</td>
+                    <td style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Rate:</td>
                     <td><input type="text" th:field="*{rate}" /></td>
                     
                 </tr> 
 
-          <tr>
-                    <td colspan="2"><button type="submit">Save</button> </td>
-             </tr>
+          <br>
+                    <td align="center" style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" colspan="2"><button type="submit">Save</button> </td>
+
 
             </table>
         </form>
