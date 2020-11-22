@@ -6,23 +6,56 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <title style="font-family:'Cormorant Garamond', serif;">Edit Booking</title>
 
-<body style="background-color:#ededed;">
-<div style="background-color:#337ab7;height:50px;"></div>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+    <p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+    <img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 160px; height: 100px;">
+    <p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+    <a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+    <a class="btn  btn-outline-dark " th:href="@{registration}"  >Register</a>
+    <a class="btn  btn-outline-dark" th:href="@{login}">Log In</a>
+    <nav class="my-2 my-md-0 mr-md-3">
+    </nav>
+
+    <!--  <a class="btn btn-outline-primary" th:href="@{profile}">My profile</a>-->
+</div>
+<body style="background-color:#ffffff;">
+<div style="background-color:#FFFFFF;height:50px;"></div>
 <div class="container-fluid">
-    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 80px;background-color:#fff;padding:20px;border:solid 1px #ddd;">
+    <div th:align="center" class="row col-lg-4 col-lg-offset-4 " style="margin-top: 80px; background-color:#ffffff;padding:20px;border:solid 1px #000000;">
         <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
-        <form th:action="@{/employee}" method="POST" class="form-signin">
-            <h3 class="form-signin-heading" th:text="Login"></h3>
-            <h3>for employees</h3>
-            <br /> <input type="text" id="email" name="email" th:placeholder="Email" class="form-control" /> <br /> <input type="password" th:placeholder="Password" id="password" name="password" class="form-control" /> <br />
+        <form th:align="center" th:action="@{/employee}" method="POST" class="form-signin">
+            <h3 style="color: black; font-family: 'Cormorant Garamond', serif; margin-left: 130px">Login for employees</h3>
+            <br /> <input style="margin-left: 80px" th:align="center" type="text" id="email" name="email" th:placeholder="Email" class="form-control" /> <br />
+            <input style="margin-left: 80px" type="password" th:placeholder="Password" id="password" name="password" class="form-control" /> <br />
 
             <div align="center" th:if="${param.error}">
-                <p style="font-size: 20px; color: #FF1C19;">Email or Password is invalid.</p>
-            </div>
-            <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login" style="margin-right:10px;"></button>
-            <a href="/recover-password">Forgot password?</a>
+                <p style=" margin-left: 130px; font-size: 20px; color: #FF1C19;font-family: 'Cormorant Garamond', serif;">Email or Password is invalid.</p>
+            </div >
+            <button class="btn btn-lg btn-dark " name="Submit" value="Login" type="Submit" th:text="Login" style=" margin-right: 80px; "><p style="font-family: 'Cormorant Garamond', serif;">Login</p></button>
+
             <br>
             <br>
 
