@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<style>
-</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<style>
+	</style>
 </head>
 
 <body>
@@ -14,6 +14,160 @@
 
 <h2>Search Employees</h2>
 <p>Click on the button to open the dropdown menu, and use the input field to search for a specific employee.</p>
+-->
+<!-- <label for="browser">Employee Id:</label> -->
+<!-- <input list="id" id="myId"> -->
+
+<!-- <label for="browser">Name:</label> -->
+<!-- <input list="name" id="myName"> -->
+
+<!-- <label for="browser">Surname:</label> -->
+<!-- <input list="surname" id="mySurname"> -->
+
+<!-- <label for="browser">Employee Type:</label> -->
+<!-- <input list="type" id="myType"> -->
+<!-- <datalist id="type"> -->
+<!-- </datalist> -->
+
+<!-- <label for="browser">Hotel Name:</label> -->
+<!-- <input list="hotel" id="myHotel"> -->
+<!-- <datalist id="hotel"> -->
+<!-- </datalist> -->
+
+<!-- <input type="submit" value="Search" id="search" onclick="employeeList()"> -->
+<!-- <br> -->
+<!-- <br> -->
+
+
+<!--
+<form th:action="@{/manager/search}">
+	<label>Employee Id:</label>
+	<input type="text" th:name="id"/>
+
+	<label>Name:</label>
+	<input type="text" th:name="name"/>
+
+	<label>Surname:</label>
+	<input type="text" th:name="surname"/>
+
+	<label>Type:</label>
+	<select th:name="type">
+		<option th:value="${null}" th:text="${null}"></option>
+		<option th:each="i : ${type}" th:value="${i}" th:text="${i}"></option>
+	</select>
+
+	<label>Hotel Name:</label>
+	<select th:name="hotel">
+		<option th:value="${null}" th:text="${All}"></option>
+		<option th:each="i : ${hotel}" th:value="${i}" th:text="${i}"></option>
+	</select>
+
+	<input type="submit"/>
+</form>
+
+<br>
+
+
+<div th:if="${employees.empty}"> No employees. </div>
+<div th:each="book : ${employees}">
+	<details>
+		<summary><span
+				th:text="${book.getEmployee().getName() + ' ' + book.getEmployee().getSecond_name()}">
+				</span> <a th:href="${'/manager/edit/' + book.getEmployee().getEmployee_id()}">
+			<button	type="button">Choose</button></a>
+		</summary>
+		<p th:text="${'Type: ' + book.getEmployee().getEmployee_type()}"></p>
+		<p th:text="${'E-mail: ' + book.getEmployee().getEmail()}"></p>
+		<p th:text="${'Phone: ' + book.getEmployee().getPhone()}"></p>
+		<p
+				th:text="${'Hotel: ' + book.getEmployee().getHotel().getHotelName()+' (' +
+		book.getEmployee().getHotel().getCity()+', ' + book.getEmployee().getHotel().getCountry()+')'}"></p>
+		<div th:text="${'Working Hours: '}"></div>
+		<div th:each="w : ${book.getFullWeekdays()}">
+			<div th:text="${w +': ' + book.getFrom() + ' - ' + book.getTo()}"></div>
+		</div>
+		<br>
+	</details>
+	<br>
+</div>
+
+
+<script>
+	function updateList(items, tag) {
+		$(tag).html("");
+		$(tag).append("<option value=\""+""+"\">"+"All"+"</option>");
+		items.forEach(function (e) {
+			$(tag).append("<option value=\""+e+"\">"+e+"</option>");
+		});
+	}
+
+	function getHotelList() {
+		$.ajax({
+			url : 'hotelnames',
+			dataType : 'json',
+			success : function(r) {
+				updateList(r, "#hotel");
+			}
+		});
+	}
+
+	function getTypeList() {
+		$.ajax({
+			url : 'employeetypes',
+			dataType : 'json',
+			success : function(r) {
+				updateList(r, "#type");
+			}
+		});
+	}
+
+	$(document).ready(function () {
+
+	});
+
+</script>
+</body>
+</html>
+
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+</style>
+</head>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+	<p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+	<img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 160px; height: 100px;">
+	<p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+	<a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+
+	<nav class="my-2 my-md-0 mr-md-3">
+	</nav>
+
+</div>
+<body>
+<div style="margin-left: 100px; margin-top: 40px;">
+<h2 style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 35px">Search Employees</h2>
+<p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Click on the button to open the dropdown menu, and use the input field to search for a specific employee.</p>
+
+
+
 
 <!-- <label for="browser">Employee Id:</label> -->
 <!-- <input list="id" id="myId"> -->
@@ -38,23 +192,28 @@
 <!-- <br> -->
 <!-- <br> -->
 
+
+
+
+<br>
+	<br>
 <form th:action="@{/manager/search}">
-	<label>Employee Id:</label>
+	<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Employee Id:</label>
 	<input type="text" th:name="id"/>
 	
-	<label>Name:</label>
+	<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Name:</label>
 	<input type="text" th:name="name"/>
 	
-	<label>Surname:</label>
+	<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Surname:</label>
 	<input type="text" th:name="surname"/>
 
-    <label>Type:</label>
+    <label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Type:</label>
     <select th:name="type">
     <option th:value="${null}" th:text="${null}"></option>
     <option th:each="i : ${type}" th:value="${i}" th:text="${i}"></option>
     </select>
     
-    <label>Hotel Name:</label>
+    <label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Hotel Name:</label>
     <select th:name="hotel">
     <option th:value="${null}" th:text="${All}"></option>
     <option th:each="i : ${hotel}" th:value="${i}" th:text="${i}"></option>
@@ -66,13 +225,13 @@
 <br>
 
 
-<div th:if="${employees.empty}"> No employees. </div>
+<div style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" th:if="${employees.empty}"> No employees. </div>
 	<div th:each="book : ${employees}">
 		<details>
 			<summary><span
 				th:text="${book.getEmployee().getName() + ' ' + book.getEmployee().getSecond_name()}">
 				</span> <a th:href="${'/manager/edit/' + book.getEmployee().getEmployee_id()}">
-				<button	type="button">Choose</button></a>
+				<button style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px"	type="button">Choose</button></a>
 			</summary>
 			<p th:text="${'Type: ' + book.getEmployee().getEmployee_type()}"></p>
 			<p th:text="${'E-mail: ' + book.getEmployee().getEmail()}"></p>
@@ -124,5 +283,6 @@ $(document).ready(function () {
 });
 
 </script>
+</div>
 </body>
 </html>
