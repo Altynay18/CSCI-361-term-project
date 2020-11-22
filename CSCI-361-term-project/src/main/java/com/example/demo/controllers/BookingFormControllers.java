@@ -73,9 +73,10 @@ public class BookingFormControllers {
 		if(auth.isAuthenticated()) {
 			org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String currentPrincipalName = authentication.getName();
-			if(!guestRepository.findByEmail(currentPrincipalName).isEmpty()) {
-				Guest user = guestRepository.findByEmail(currentPrincipalName).get();
-				book.setGuest(user);
+			Optional<Guest> user = guestRepository.findByEmail(currentPrincipalName);
+
+			if(user.isPresent()) {
+				book.setGuest(user.get());
 			}
 
 		}
