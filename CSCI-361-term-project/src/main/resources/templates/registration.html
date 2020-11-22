@@ -6,62 +6,102 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body style="background-color: #ededed;">
-<div style="background-color: #337ab7; height: 50px;"></div>
-<div class="container-fluid" style="margin-top: 30px;">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <title style="font-family:'Cormorant Garamond', serif;">Edit Booking</title>
 
-    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+    <p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+    <img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 160px; height: 100px;">
+    <p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+    <a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+    <a class="btn  btn-outline-dark " th:href="@{registration}"  >Register</a>
+    <a class="btn  btn-outline-dark" th:href="@{login}">Log In</a>
+    <nav class="my-2 my-md-0 mr-md-3">
+    </nav>
+
+    <!--  <a class="btn btn-outline-primary" th:href="@{profile}">My profile</a>-->
+</div>
+<body style="background-color: #ffffff;">
+<div class="container-fluid" style="margin-top: 30px; align-content: center">
+
+    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 10px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
         <form autocomplete="off" action="" th:action="@{/registration}" th:object="${user}" method="post" class="form-signin" role="form">
-            <h3 class="form-signin-heading">Registration Form</h3>
+            <h3 style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 30px; margin-left: 120px" class="form-signin-heading">Registration Form</h3>
+            <br>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{name}" placeholder="Name" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{name}" placeholder="Name" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{surname}" placeholder="Last Name" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{surname}" placeholder="Last Name" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{email}" placeholder="Email" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{phone_number}" placeholder="Phone Number" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{phone_number}" placeholder="Phone Number" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="password" th:field="*{password}" placeholder="Password" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{id_type}" placeholder="Identyfication Type" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{id_type}" placeholder="Identyfication Type" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{id_number}" placeholder="Identyfication Number" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{id_number}" placeholder="Identyfication Number" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{mobile_number}" placeholder="Mobile Number" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{mobile_number}" placeholder="Mobile Number" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{address}" placeholder="Address" class="form-control" />
+                    <input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="text" th:field="*{address}" placeholder="Address" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <button type="submit" class="btn btn-primary btn-block">Register User</button>
+                    <button style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-left: 60px" type="submit" class="btn btn-primary btn-block">Register User</button>
                 </div>
             </div>
             
