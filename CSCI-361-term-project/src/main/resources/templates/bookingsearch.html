@@ -1,38 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+ <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+ <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Junge&display=swap" rel="stylesheet">
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ <link rel="stylesheet"
+       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+       crossorigin="anonymous">
 <style>
 table {
   border: 1px solid black;
 }
 </style>
 </head>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="height: 100px;">
+ <p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" >Hedgehogs Hotel Chain</p> <p style="color: #FFFFFF">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
 
+ <img src="https://tattmight.com/albums/userpics/2015y/02/09/20/206/0319-I_have_no_interest_i_8_ink.jpg" style="justify-content: center; width: 160px; height: 100px;">
+ <p style="color: #FFFFFF">kkkkkkkkkkkkkkkk kkklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+
+ <a class="btn  btn-outline-dark " th:href="@{/}"  >Main</a>
+ <a class="btn  btn-outline-dark " th:href="@{registration}"  >Register</a>
+ <a class="btn  btn-outline-dark" th:href="@{login}">Log In</a>
+ <nav class="my-2 my-md-0 mr-md-3">
+ </nav>
+
+ <!--  <a class="btn btn-outline-primary" th:href="@{profile}">My profile</a>-->
+</div>
 <body>
-<a class="btn btn-outline-primary" th:href="@{/}">Main page</a>
-<h2>Search Bookings</h2>
-<p>Use the input field to search for a specific booking.</p>
+<div align="center" style="margin-top: 100px">
+<h2 style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 40px">Search Bookings</h2>
+<p style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px">Use the input field to search for a specific booking.</p>
+ <br>
+ <br>
 <form onsubmit="return false">
-<label for="browser">Booking Id:</label>
+<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" for="browser">Booking Id:</label>
 <input type="number" id="bookingId">
 
-<label for="browser">Guest Id:</label>
+<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" for="browser">Guest Id:</label>
 <input type="number" id="guestId">
 
-<label for="browser">Guest Email:</label>
+<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" for="browser">Guest Email:</label>
 <input type="text" id="guestEmail">
 
-<input type="submit" value="Search" id="search" onclick="bookingList()">
+<input style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type="submit" value="Search" id="search" onclick="bookingList()">
 <input type="reset">
 </form>
 <br> <br>
-<label for="browser">Existing bookings:</label>
+<label style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" for="browser">Existing bookings:</label>
 <br>
 <br>
 <div id="my-list"></div>
 <br>
+</div>
 <!-- <table style="width:100%" id="my-list"></table> -->
 
 <script>
@@ -87,6 +113,9 @@ $(document).ready(function () {
 	bookingList();
 });
 </script>
- <a class="btn btn-outline-primary" th:href="@{search}"><button type= "button">Create Booking</button></a>
+<div align="center">
+ <a  class="btn btn-outline-primary" th:href="@{search}"><button style="color: black; font-family: 'Cormorant Garamond', serif; font-size: 20px" type= "button">Create Booking</button></a>
+
+</div>
 </body>
 </html>
