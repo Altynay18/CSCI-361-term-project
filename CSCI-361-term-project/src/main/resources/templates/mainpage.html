@@ -19,6 +19,7 @@
     </nav>
 
     <a class="btn btn-outline-dark" th:href="@{profile}">My profile</a>
+    <a class="btn btn-outline-dark" sec:authorize ="isAuthenticated()" th:href="@{/logout}">Log out</a>
 </div>
 <body>
 <section class="jumbotron text-center" style="height: 700px; background: #FFFFFF url(https://k6u8v6y8.stackpathcdn.com/blog/wp-content/uploads/2014/05/Luxury-Hotels-in-India.jpg) no-repeat fixed center center; ">
